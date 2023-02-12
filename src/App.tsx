@@ -1,12 +1,13 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react"
+import "./App.css"
+import SiguUp from "./Pages/Authentication/SignUp/SiguUp"
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="App">
-      z
+      <SiguUp />
     </div>
   )
 }
