@@ -1,7 +1,7 @@
 import { Avatar, Button, Divider } from "@chakra-ui/react"
 import styles from "./SignUp.module.css"
 
-const SiguUp = () => {
+const SignUp = () => {
   return (
     <div className={styles.main_container}>
       <div className={styles.first_view_container}>
@@ -56,5 +56,5 @@ const SiguUp = () => {
   )
 }
 
-export default SiguUp
+export default SignUp
 4
