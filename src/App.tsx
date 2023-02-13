@@ -3,6 +3,7 @@ import "./App.css"
 import SignUp from "./Pages/Authentication/SignUp/SignUp"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import Verification from "./Pages/Authentication/Verification/Verification"
+import Login from "./Pages/Authentication/Login/Login"
 
 function App() {
   return (
@@ -10,6 +11,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/signup" element={<SignUp />}></Route>
+        </Routes>
+        <Routes>
+          <Route path="/login" element={<Login />}></Route>
         </Routes>
         <Routes>
           <Route path="/verify" element={<Verification />}></Route>

@@ -12,11 +12,22 @@ const Verification = () => {
   return (
     <div className={styles.main_container}>
       <div className={styles.first_view_container}>
-        <img
-          src="/assets/verification/image.png"
-          alt=""
-          className={styles.fv_image}
-        />
+        <div className={styles.password_strength}>
+          <img
+            src="/assets/verification/image.png"
+            alt=""
+            className={styles.fv_image}
+          />
+          <PasswordChecklist
+            className={styles.password_checklist}
+            validColor="#2f8cc9"
+            invalidColor="#404040"
+            rules={["minLength", "specialChar", "number", "capital", "match"]}
+            minLength={8}
+            value={password}
+            valueAgain={passwordAgain}
+          />
+        </div>
         <div className={styles.form_container}>
           <div className={styles.fv_texts}>
             <p className={styles.fv_heading}>
@@ -42,23 +53,6 @@ const Verification = () => {
               onChange={(e) => setPasswordAgain(e.target.value)}
               className={styles.input_field}
             />
-            <div className={styles.password_strength}>
-              <PasswordChecklist
-                className={styles.password_checklist}
-                validColor="#2f8cc9"
-                invalidColor="#404040"
-                rules={[
-                  "minLength",
-                  "specialChar",
-                  "number",
-                  "capital",
-                  "match",
-                ]}
-                minLength={8}
-                value={password}
-                valueAgain={passwordAgain}
-              />
-            </div>
           </div>
           <Button colorScheme="linkedin" size="md">
             Set Password

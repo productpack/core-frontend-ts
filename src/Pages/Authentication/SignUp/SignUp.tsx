@@ -8,12 +8,11 @@ const SignUp = () => {
         <div className={styles.form_container}>
           <div className={styles.fv_texts}>
             <p className={styles.fv_heading}>
-              Welcome to <br />
-              Product Pack Login
+              Hey There, Enter in your Email Address and Full Name.
             </p>
             <p className={styles.fv_tagline}>
-              Hi There, Enter in your email and password to login to the your
-              product pack dashboardd.
+              Once you click the submit button, make sure to check your mail id
+              for the furthur signup process.
             </p>
           </div>
           <div className={styles.fv_input_form}>
@@ -57,4 +56,4 @@ const SignUp = () => {
 }
 
 export default SignUp
-4
+
