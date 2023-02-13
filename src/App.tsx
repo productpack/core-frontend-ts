@@ -4,6 +4,7 @@ import SignUp from "./Pages/Authentication/SignUp/SignUp"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import Verification from "./Pages/Authentication/Verification/Verification"
 import Login from "./Pages/Authentication/Login/Login"
+import ResetPassword from "./Pages/Authentication/ResetPassword/ResetPassword"
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/verify" element={<Verification />}></Route>
+        </Routes>
+        <Routes>
+          <Route path="/resetpassword" element={<ResetPassword />}></Route>
         </Routes>
       </Router>
     </div>
