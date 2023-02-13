@@ -1,20 +1,14 @@
-.main_container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-evenly;
-  min-height: 100vh;
-  margin: 2rem;
-}
-
 .testimonial_content {
   font-size: 1rem;
   font-family: "Poppins", sans-serif;
   margin-top: 1rem;
 }
 
-.testimonial {
+.testimonials_container {
+  max-width: 30rem;
+}
+
+.form_container {
   max-width: 35rem;
 }
 
@@ -23,16 +17,20 @@
   margin-left: 1rem;
 }
 
+.first_view_container {
+  margin: 2rem;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .speaker_details {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.first_view_container {
-  max-width: 40rem;
-  background-color: #fff;
-  padding: 1rem;
 }
 
 .fv_input_form {
@@ -41,7 +39,7 @@
 
 .fv_heading {
   font-family: "Montserrat", sans-serif;
-  font-size: 2.5rem;
+  font-size: 3rem;
   line-height: 3rem;
   color: #2f8cc9;
   font-weight: 600;
@@ -54,12 +52,14 @@
   margin-top: 1rem;
   margin-right: 1rem;
   float: left;
+  cursor: pointer;
 }
 
 .input_field {
   border: 1px solid #9c9c9c;
   border-radius: 3px;
-  min-width: 20rem;
+  width: 80%;
+  font-family: "Poppins", sans-serif;
   padding: 0.5rem 3.5rem;
   padding-left: 0.75rem;
 }
@@ -68,7 +68,7 @@
   font-family: "Poppins", sans-serif;
   font-size: 1rem;
   margin-top: 0.75rem;
-  max-width: 28rem;
+  max-width: 30rem;
 }
 
 .fv_input_field_label {
