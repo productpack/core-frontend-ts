@@ -1,7 +1,36 @@
+import React from "react"
+
 import { Avatar, Button, Divider } from "@chakra-ui/react"
 import styles from "./Login.module.css"
+import axios from "axios"
+import { useState } from "react"
+import { Link } from "react-router-dom"
+
+import { Alert, AlertIcon, AlertDescription } from "@chakra-ui/react"
 
 const Login = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const [status, setStatus] = useState(1)
+  const [statusMessage, setStatusMessage] = useState("")
+
+  const login = () => {
+    axios
+      .post(`${import.meta.env.VITE_APP_BACKEND_URL}/login`, {
+        email: email,
+        password: password,
+      })
+      .then(function (response) {
+        setStatus(response.status)
+        setStatusMessage("User Login Successful.")
+      })
+      .catch(function (error) {
+        console.log(error.response)
+        setStatus(error.response.status)
+        setStatusMessage("Either Invalid User or Wrong Password")
+      })
+  }
   return (
     <div className={styles.main_container}>
       <div className={styles.first_view_container}>
@@ -18,16 +47,52 @@ const Login = () => {
           </div>
           <div className={styles.fv_input_form}>
             <p className={styles.fv_input_field_label}>Email Address</p>
-            <input type="email" className={styles.input_field} />
+            <input
+              onChange={(e) => {
+                setEmail(e.target.value)
+              }}
+              type="email"
+              className={styles.input_field}
+            />
             <p className={styles.fv_input_field_label}>Password</p>
-            <input type="password" className={styles.input_field} />
+            <input
+              onChange={(e) => {
+                setPassword(e.target.value)
+              }}
+              type="password"
+              className={styles.input_field}
+            />
+            {status && (status === 200 || status === 400) && (
+              <Alert
+                marginTop="2rem"
+                marginBottom="2rem"
+                variant="left-accent"
+                width="80%"
+                status={status === 400 ? "error" : "success"}
+              >
+                <AlertIcon />
+                <div>
+                  <AlertDescription>{statusMessage}</AlertDescription>
+                </div>
+              </Alert>
+            )}
           </div>
-          <Button colorScheme="linkedin" size="md">
+          <Button
+            onClick={() => {
+              if (email && password) {
+                login()
+              }
+            }}
+            colorScheme="linkedin"
+            size="md"
+          >
             Login
           </Button>
           <div className={styles.secondary_options}>
             <p className={styles.so_text}>Forgot Password?</p>
-            <p className={styles.so_text}>Don't have an account?</p>
+            <Link to="/signup">
+              <p className={styles.so_text}>Don't have an account?</p>
+            </Link>
           </div>
         </div>
         <div className={styles.fv_image_container}>

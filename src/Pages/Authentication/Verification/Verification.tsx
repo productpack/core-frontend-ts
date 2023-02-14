@@ -1,13 +1,53 @@
-import { Avatar, Button, Divider } from "@chakra-ui/react"
-import React, { useState } from "react"
+import { Button } from "@chakra-ui/react"
+import { useEffect, useState } from "react"
 import styles from "./Verification.module.css"
 
 import PasswordChecklist from "react-password-checklist"
+import axios from "axios"
+import { useSearchParams } from "react-router-dom"
+
+import {
+  Alert,
+  AlertIcon,
+  AlertDescription,
+} from "@chakra-ui/react"
 
 const Verification = () => {
   const [email, setEmail] = useState("")
+  const [secret, setSecret] = useState("")
   const [password, setPassword] = useState("")
   const [passwordAgain, setPasswordAgain] = useState("")
+  const [isvalid, setIsValid] = useState(false)
+  const [searchParams] = useSearchParams()
+
+  const [status, setStatus] = useState(1)
+  const [statusMessage, setStatusMessage] = useState("")
+
+  useEffect(() => {
+    setEmail(atob(searchParams.get("email") as string))
+    setSecret(searchParams.get("secret") as string)
+  }, [])
+
+  const set_pass = () => {
+    axios
+      .post(`${import.meta.env.VITE_APP_BACKEND_URL}/set_pass`, {
+        email: email,
+        secret: secret,
+        password: passwordAgain,
+      })
+      .then(function (response) {
+        setStatus(response.status)
+        setStatusMessage("SignUp Is Successfully Completed.")
+      })
+      .catch(function (error) {
+        setStatus(error.response.status)
+        if (isvalid) {
+          setStatusMessage("User Already Verified, Please Login!")
+        } else {
+          setStatusMessage("Password Doesn't Meet Security Requirements!")
+        }
+      })
+  }
 
   return (
     <div className={styles.main_container}>
@@ -26,6 +66,9 @@ const Verification = () => {
             minLength={8}
             value={password}
             valueAgain={passwordAgain}
+            onChange={(isValid) => {
+              setIsValid(isValid)
+            }}
           />
         </div>
         <div className={styles.form_container}>
@@ -40,7 +83,12 @@ const Verification = () => {
           </div>
           <div className={styles.fv_input_form}>
             <p className={styles.fv_input_field_label}>Email Address</p>
-            <input type="email" className={styles.input_field} />
+            <input
+              disabled
+              value={email}
+              type="email"
+              className={styles.input_field}
+            />
             <p className={styles.fv_input_field_label}>Password</p>
             <input
               type="password"
@@ -54,13 +102,30 @@ const Verification = () => {
               className={styles.input_field}
             />
           </div>
-          <Button colorScheme="linkedin" size="md">
+          {status && (status === 200 || status === 400) && (
+            <Alert
+              marginTop="2rem"
+              marginBottom="2rem"
+              variant="left-accent"
+              width="80%"
+              status={status === 400 ? "error" : "success"}
+            >
+              <AlertIcon />
+              <div>
+                <AlertDescription>{statusMessage}</AlertDescription>
+              </div>
+            </Alert>
+          )}
+
+          <Button
+            onClick={() => {
+              set_pass()
+            }}
+            colorScheme="linkedin"
+            size="md"
+          >
             Set Password
           </Button>
-          <div className={styles.secondary_options}>
-            <p className={styles.so_text}>Forgot Password?</p>
-            <p className={styles.so_text}>Already have an Account?</p>
-          </div>
         </div>
       </div>
     </div>
