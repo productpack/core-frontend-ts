@@ -4,6 +4,7 @@ import styles from "./SignUp.module.css"
 import { useState } from "react"
 
 import { Alert, AlertIcon, AlertDescription } from "@chakra-ui/react"
+import { Link } from "react-router-dom"
 
 const SignUp = () => {
   const [email, setEmail] = useState("")
@@ -92,8 +93,9 @@ const SignUp = () => {
               SignUp
             </Button>
             <div className={styles.secondary_options}>
-              <p className={styles.so_text}>Forgot Password?</p>
-              <p className={styles.so_text}>Already have an Account?</p>
+              <Link to="/login">
+                <p className={styles.so_text}>Already have an Account?</p>
+              </Link>
             </div>
           </div>
           <div className={styles.testimonials_container}>

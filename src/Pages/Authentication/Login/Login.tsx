@@ -22,6 +22,7 @@ const Login = () => {
         password: password,
       })
       .then(function (response) {
+        localStorage.setItem("access_token", response.data.data.access_token)
         setStatus(response.status)
         setStatusMessage("User Login Successful.")
       })
@@ -64,8 +65,8 @@ const Login = () => {
             />
             {status && (status === 200 || status === 400) && (
               <Alert
-                marginTop="2rem"
-                marginBottom="2rem"
+                marginTop="1rem"
+                marginBottom="1rem"
                 variant="left-accent"
                 width="80%"
                 status={status === 400 ? "error" : "success"}
@@ -89,7 +90,9 @@ const Login = () => {
             Login
           </Button>
           <div className={styles.secondary_options}>
-            <p className={styles.so_text}>Forgot Password?</p>
+            <Link to="/resetpassword">
+              <p className={styles.so_text}>Forgot Password?</p>
+            </Link>
             <Link to="/signup">
               <p className={styles.so_text}>Don't have an account?</p>
             </Link>
