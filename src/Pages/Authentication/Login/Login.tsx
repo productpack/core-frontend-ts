@@ -4,6 +4,7 @@ import { Avatar, Button, Divider } from "@chakra-ui/react"
 import styles from "./Login.module.css"
 import axios from "axios"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 
 import { Alert, AlertIcon, AlertDescription } from "@chakra-ui/react"
@@ -14,7 +15,7 @@ const Login = () => {
 
   const [status, setStatus] = useState(1)
   const [statusMessage, setStatusMessage] = useState("")
-
+  let navigate = useNavigate()
   const login = () => {
     axios
       .post(`${import.meta.env.VITE_APP_BACKEND_URL}/login`, {
@@ -25,6 +26,7 @@ const Login = () => {
         localStorage.setItem("access_token", response.data.data.access_token)
         setStatus(response.status)
         setStatusMessage("User Login Successful.")
+        return navigate("/user/dashboard")
       })
       .catch(function (error) {
         console.log(error.response)

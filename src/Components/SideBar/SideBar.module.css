@@ -1,0 +1,27 @@
+.menuHeader {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.8rem;
+  margin-top: 2rem;
+  margin-left: 1rem;
+  color: #2f8cc9;
+  font-weight: 500;
+}
+
+.sidebar_container {
+  position: relative;
+}
+
+.menuItem {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.85rem;
+  color: #525252;
+}
+
+.subHeader {
+  font-size: 0.9rem;
+  color: #525252;
+}
+
+.icon {
+  width: 500px;
+}

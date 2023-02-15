@@ -1,0 +1,79 @@
+.main_container {
+  display: flex;
+  flex-direction: row;
+}
+
+.dashboard_container {
+  padding: 2rem;
+  background-color: #ffffff;
+  width: 80%;
+
+  background-color: #ffffff;
+  opacity: 1;
+  background: repeating-linear-gradient(
+    45deg,
+    #f4f8fa,
+    #f4f8fa 2.5px,
+    #ffffff 2.5px,
+    #ffffff 12.5px
+  );
+}
+
+.welcome_text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #2f8cc9;
+}
+
+.text_tagline {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  max-width: 30rem;
+}
+
+.user_points {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  border: 2px solid #8bc8f0;
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+
+.user_point {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.points {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+
+.points_title {
+  font-family: "Montserrat";
+  font-size: 0.9rem;
+}
+
+.sub_header {
+  font-family: "Montserrat", sans-serif;
+  margin-top: 1.75rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.upcoming_events {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.event_container {
+  margin: 1rem;
+}

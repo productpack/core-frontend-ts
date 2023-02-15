@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import Verification from "./Pages/Authentication/Verification/Verification"
 import Login from "./Pages/Authentication/Login/Login"
 import ResetPassword from "./Pages/Authentication/ResetPassword/ResetPassword"
+import UserDashboard from "./Pages/Dashboard/UserDashboard/UserDashboard"
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/resetpassword" element={<ResetPassword />}></Route>
+        </Routes>
+        <Routes>
+          <Route path="/user/dashboard" element={<UserDashboard />}></Route>
         </Routes>
       </Router>
     </div>
