@@ -6,6 +6,7 @@ import Verification from "./Pages/Authentication/Verification/Verification"
 import Login from "./Pages/Authentication/Login/Login"
 import ResetPassword from "./Pages/Authentication/ResetPassword/ResetPassword"
 import UserDashboard from "./Pages/Dashboard/UserDashboard/UserDashboard"
+import CreateEvent from "./Pages/Dashboard/AdminDashboard/CreateEvent/CreateEvent"
 
 function App() {
   return (
@@ -13,18 +14,16 @@ function App() {
       <Router>
         <Routes>
           <Route path="/signup" element={<SignUp />}></Route>
-        </Routes>
-        <Routes>
+
           <Route path="/login" element={<Login />}></Route>
-        </Routes>
-        <Routes>
+
           <Route path="/verify" element={<Verification />}></Route>
-        </Routes>
-        <Routes>
+
           <Route path="/resetpassword" element={<ResetPassword />}></Route>
-        </Routes>
-        <Routes>
+
           <Route path="/user/dashboard" element={<UserDashboard />}></Route>
+
+          <Route path="/admin/createevents" element={<CreateEvent />}></Route>
         </Routes>
       </Router>
     </div>

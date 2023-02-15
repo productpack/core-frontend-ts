@@ -24,6 +24,8 @@ const Login = () => {
       })
       .then(function (response) {
         localStorage.setItem("access_token", response.data.data.access_token)
+        localStorage.setItem("is_admin", response.data.data.is_admin)
+
         setStatus(response.status)
         setStatusMessage("User Login Successful.")
         return navigate("/user/dashboard")

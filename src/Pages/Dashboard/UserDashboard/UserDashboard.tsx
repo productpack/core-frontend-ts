@@ -8,22 +8,36 @@ import { TbSum, TbSchool, TbBallpen, TbPlus } from "react-icons/tb"
 
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
-  Image,
   Stack,
   Heading,
   Text,
-  Divider,
-  ButtonGroup,
   Button,
+  useDisclosure,
 } from "@chakra-ui/react"
+
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react"
+
+import { Badge } from "@chakra-ui/react"
 
 const UserDashboard = () => {
   const [userDetails, setUserDetails] = useState({
     name: "",
     email: "",
+  })
+
+  const [discordStatus, setDiscordStatus] = useState({
+    discord_secret: "",
+    onboard_status: false,
   })
 
   const [userpoints, setUserpoints] = useState({
@@ -32,6 +46,10 @@ const UserDashboard = () => {
     common_points: 0,
     total_points: 0,
   })
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const [copyStatus, setCopyStatus] = useState(false)
 
   const [upcomingEvents, setUpcomingEvents] = useState([
     {
@@ -85,7 +103,11 @@ const UserDashboard = () => {
         },
       })
       .then(function (response) {
-        console.log(response.data.data.onboard_status)
+        console.log(response.data.data)
+        setDiscordStatus(response.data.data)
+        if (!response.data.detail.onboard_status) {
+          onOpen()
+        }
       })
       .catch(function (error) {
         console.log(error.response.status)
@@ -104,11 +126,46 @@ const UserDashboard = () => {
 
   return (
     <div className={styles.main_container}>
-      <SideBar />
+      <SideBar onOpen={onOpen} />
+      <Modal onClose={onClose} isOpen={isOpen} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Onboard Discord Server</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>
+              {" "}
+              It seems like you haven't onboarded the discord server yet. Kindly
+              copy the below shown key and onboard the Product Pack Discord
+              Server.
+            </Text>
+            <br />
+            <Text as="b">Discord Secret Key</Text>
+            <Text>{discordStatus.discord_secret}</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              marginRight={"1rem"}
+              onClick={() => {
+                navigator.clipboard.writeText(discordStatus.discord_secret)
+                setCopyStatus(true)
+              }}
+            >
+              {copyStatus ? "Key Copied" : "Copy Key"}
+            </Button>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <div className={styles.dashboard_container}>
         <div>
           <p className={styles.welcome_text}>
             Hi, {userDetails ? userDetails.name : ""}{" "}
+            <Badge colorScheme={discordStatus.onboard_status ? "green" : "red"}>
+              {discordStatus.onboard_status
+                ? "Discord Onboarded"
+                : "Onboarding Pending"}
+            </Badge>
           </p>
           <p className={styles.text_tagline}>
             Welcome to Product Pack Dashboard
