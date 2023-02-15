@@ -159,9 +159,23 @@ const UserDashboard = () => {
                     <CardBody>
                       <Stack mt="6" spacing="2">
                         <Heading size="md">{event.title}</Heading>
-                        <Text noOfLines={5}>{event.description}</Text>
-                        <Text as="b">Start Date & Time</Text>
-                        <Text>{event.start_time}</Text>
+                        <Text fontSize="md" noOfLines={5}>
+                          {event.description}
+                        </Text>
+                        <Text as="b">Event Date and Time</Text>
+
+                        <Text>
+                          {event.start_time &&
+                            new Intl.DateTimeFormat("en-IN", {
+                              timeZone: "Asia/Kolkata",
+                              hour: "numeric",
+                              minute: "numeric",
+                              hour12: true,
+                              year: "numeric",
+                              month: "2-digit",
+                              day: "2-digit",
+                            }).format(new Date(event.start_time))}
+                        </Text>
                       </Stack>
                     </CardBody>
 

@@ -77,3 +77,7 @@
 .event_container {
   margin: 1rem;
 }
+
+.learning_material {
+  max-width: 25rem;
+}
