@@ -67,6 +67,11 @@ const UserDashboard = () => {
       updatedAt: "",
     },
   ])
+
+  useEffect(() => {
+    setCopyStatus(false)
+  }, [isOpen])
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/detail`, {
@@ -104,13 +109,18 @@ const UserDashboard = () => {
       })
       .then(function (response) {
         console.log(response.data.data)
-        setDiscordStatus(response.data.data)
-        if (!response.data.detail.onboard_status) {
+
+        if (!response.data.data.onboard_status) {
           onOpen()
         }
+        setDiscordStatus(response.data.data)
+        localStorage.setItem(
+          "onboard_status",
+          response.data.data.onboard_status
+        )
       })
       .catch(function (error) {
-        console.log(error.response.status)
+        console.log(error)
       })
 
     axios
@@ -120,7 +130,7 @@ const UserDashboard = () => {
         setUpcomingEvents(response.data.data)
       })
       .catch(function (error) {
-        console.log(error.response.status)
+        console.log(error)
       })
   }, [])
 
@@ -144,6 +154,15 @@ const UserDashboard = () => {
             <Text>{discordStatus.discord_secret}</Text>
           </ModalBody>
           <ModalFooter>
+            <a
+              href="https://discord.gg/hTCsB3SC"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button marginRight={"1rem"} onClick={onClose}>
+                Join Discord
+              </Button>
+            </a>
             <Button
               marginRight={"1rem"}
               onClick={() => {

@@ -17,6 +17,7 @@ const Login = () => {
   const [statusMessage, setStatusMessage] = useState("")
   let navigate = useNavigate()
   const login = () => {
+    localStorage.clear()
     axios
       .post(`${import.meta.env.VITE_APP_BACKEND_URL}/login`, {
         email: email,

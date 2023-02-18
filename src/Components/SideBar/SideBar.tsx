@@ -44,19 +44,34 @@ const SideBar = ({ onOpen }: { onOpen: any }) => {
                 {" "}
                 User Dashboard
               </MenuItem>
-              <a
-                href="http://productpack.in"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+
+              {localStorage.getItem("onboard_status") === "true" ? (
+                <a
+                  href="https://discord.gg/hTCsB3SC"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <MenuItem
+                    icon={<RxDiscordLogo color="#59b4f0" size={22} />}
+                    className={styles.menuItem}
+                  >
+                    {" "}
+                    Goto Discord
+                  </MenuItem>
+                </a>
+              ) : (
                 <MenuItem
                   icon={<RxDiscordLogo color="#59b4f0" size={22} />}
                   className={styles.menuItem}
+                  onClick={() => {
+                    onOpen()
+                  }}
                 >
                   {" "}
                   Join Discord
                 </MenuItem>
-              </a>
+              )}
+
               <SubMenu
                 className={styles.subHeader}
                 icon={<CiCalendar color="#59b4f0" size={25} />}
@@ -66,16 +81,7 @@ const SideBar = ({ onOpen }: { onOpen: any }) => {
                 <MenuItem className={styles.menuItem}> Upcoming</MenuItem>
                 <MenuItem className={styles.menuItem}> Past Events</MenuItem>
               </SubMenu>
-              <MenuItem
-                icon={<IoKeyOutline color="#59b4f0" size={25} />}
-                className={styles.menuItem}
-                onClick={() => {
-                  onOpen()
-                }}
-              >
-                {" "}
-                View Discord Key
-              </MenuItem>
+
               <MenuItem
                 icon={<CiLogout color="#59b4f0" size={25} />}
                 className={styles.menuItem}
@@ -89,7 +95,7 @@ const SideBar = ({ onOpen }: { onOpen: any }) => {
               </MenuItem>
             </Menu>
           </div>
-          {localStorage.getItem("is_admin") && (
+          {localStorage.getItem("is_admin") === "true" && (
             <div>
               <Menu>
                 <p className={styles.menuHeader}>Admin Previlages</p>
