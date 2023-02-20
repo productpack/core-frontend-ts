@@ -1,0 +1,85 @@
+.main_container {
+  display: flex;
+  flex-direction: row;
+}
+
+.dashboard_container {
+  padding: 2rem;
+  background-color: #ffffff;
+  width: 100%;
+
+  background-color: #ffffff;
+  opacity: 1;
+  background: repeating-linear-gradient(
+    45deg,
+    #f4f8fa,
+    #f4f8fa 2.5px,
+    #ffffff 2.5px,
+    #ffffff 12.5px
+  );
+}
+
+.text_tagline {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  max-width: 30rem;
+}
+
+.main_header {
+  font-family: "Montserrat", sans-serif;
+  margin-top: 1.75rem;
+  color: #2f8cc9;
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+
+.field_label {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+}
+
+.form_fields {
+  margin-top: 2rem;
+  max-width: 60rem;
+}
+
+.form_field {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  justify-content: space-between;
+}
+
+.field_description {
+  font-family: "Poppins", sans-serif;
+}
+
+.input_field {
+  border: 1px solid #9c9c9c;
+  border-radius: 3px;
+  width: 100%;
+  max-width: 30rem;
+  font-family: "Poppins", sans-serif;
+  padding: 0.5rem 3.5rem;
+  padding-left: 0.75rem;
+  margin-left: 1rem;
+  background-color: #fff;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.input_fielddesc {
+  border: 1px solid #9c9c9c;
+  border-radius: 3px;
+  width: 100%;
+  max-width: 30rem;
+  font-family: "Poppins", sans-serif;
+  padding: 0.5rem 3.5rem;
+  padding-left: 0.75rem;
+  height: 8rem;
+}
