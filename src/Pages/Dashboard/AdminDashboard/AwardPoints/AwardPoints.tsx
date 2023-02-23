@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Text, useDisclosure } from "@chakra-ui/react"
+import { Button, ButtonGroup, Link, Text, useDisclosure } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import SideBar from "../../../../Components/SideBar/SideBar"
 import styles from "./AwardPoints.module.css"
@@ -24,7 +24,8 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react"
 import axios from "axios"
-import TagsTable from "../../../../Components/Admin/Tags/Tags"
+// import axios from "axios"
+// import TagsTable from "../../../../Components/Admin/Tags/TagsTable"
 
 const AwardPoints = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -39,6 +40,57 @@ const AwardPoints = () => {
     discord_secret: "",
     onboard_status: false,
   })
+
+  //Tags Section Starts Here
+  interface Tag {
+    code: string
+    vertical: string
+    desc: string
+    type: string
+  }
+
+  const [tags, setTags] = useState<Tag[]>([])
+
+  const [currentPageTag, setCurrentPageTag] = useState(1)
+
+  useEffect(() => {
+    fetchTags(1)
+  }, [])
+
+  const fetchTags = async (page: number) => {
+    try {
+      const response = await axios.get(
+        `${
+          import.meta.env.VITE_APP_BACKEND_URL
+        }/admin/list/tags?limit=5&page=${page}`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+        }
+      )
+      setTags(response.data.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchTags(currentPage)
+  }, [currentPage])
+
+  const handlePreviousPageTag = () => {
+    setCurrentPage((prevPage) => prevPage - 1)
+  }
+
+  const handleNextPageTag = () => {
+    setCurrentPage((prevPage) => prevPage + 1)
+  }
+
+  const handleTagClick = (tagCode: string) => {
+    setSelectedTag(tagCode)
+  }
+  //Tags Section Ends Here
 
   interface User {
     user_id: string
@@ -225,16 +277,63 @@ const AwardPoints = () => {
               </Button>
             </ButtonGroup>
           </TableContainer>
+
           <div>
             <p className={styles.main_header}>Select Tag</p>
             <p className={styles.text_tagline}>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit
               corporis fugiat amet. Veritatis, quo commodi!
             </p>
-            <TagsTable
-              selectedTag={selectedTag}
-              setSelectedTag={setSelectedTag}
-            />
+
+            <Table variant="simple">
+              <Thead>
+                <Tr>
+                  <Th>Code</Th>
+                  <Th>Vertical</Th>
+                  <Th>Description</Th>
+                  <Th>Type</Th>
+                  <Th>Select Tag</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {tags.map((tag) => (
+                  <Tr key={tag.code}>
+                    <Td>
+                      <Link onClick={() => handleTagClick(tag.code)}>
+                        {tag.code}
+                      </Link>
+                    </Td>
+                    <Td>{tag.vertical}</Td>
+                    <Td>{tag.desc}</Td>
+                    <Td>{tag.type}</Td>
+                    <Td>
+                      <Checkbox
+                        size="lg"
+                        colorScheme="blue"
+                        isChecked={selectedTag === tag.code}
+                        onChange={() => handleTagClick(tag.code)}
+                      />
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+              <ButtonGroup mt={4}>
+                <Button
+                  onClick={handlePreviousPageTag}
+                  isDisabled={currentPageTag === 1}
+                  colorScheme="linkedin"
+                >
+                  Previous
+                </Button>
+                <Button
+                  onClick={handleNextPageTag}
+                  isDisabled={tags.length < 5}
+                  colorScheme="linkedin"
+                >
+                  Next
+                </Button>
+              </ButtonGroup>
+            </Table>
           </div>
 
           <div className={styles.award_points_container}>
