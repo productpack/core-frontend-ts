@@ -1,4 +1,4 @@
-import { Button, Text, useDisclosure } from "@chakra-ui/react"
+import { Button, Text, useDisclosure, Wrap, WrapItem } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import SideBar from "../../../../Components/SideBar/SideBar"
 import styles from "./CreateEvent.module.css"
@@ -22,6 +22,16 @@ const CreateEvent = () => {
       title: "",
     },
   ])
+
+  const [slug, setSlug] = useState("")
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [vertical, setVertical] = useState("")
+  const [location, setLocation] = useState("")
+  const [startdate, setStartDate] = useState("")
+  const [enddate, setEndDate] = useState("")
+  const [starttime, setStartTime] = useState("")
+  const [endtime, setEndTime] = useState("")
 
   const [discordStatus, setDiscordStatus] = useState({
     discord_secret: "",
@@ -63,6 +73,35 @@ const CreateEvent = () => {
         console.log(error.response.status)
       })
   }, [])
+
+  const createEvent = () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("access_token"),
+    }
+
+    axios
+      .post(
+        `${import.meta.env.VITE_APP_BACKEND_URL}/admin/event/add`,
+        {
+          slug: slug,
+          title: title,
+          description: description,
+          vertical: vertical,
+          location: location,
+          start_time: new Date(`${startdate} ${starttime}`),
+          end_time: new Date(`${enddate} ${endtime}`),
+        },
+        {
+          headers: headers,
+        }
+      )
+      .then((response) => {
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.log(error.response)
+      })
+  }
 
   return (
     <>
@@ -114,7 +153,13 @@ const CreateEvent = () => {
                   This will be displayed as the card header
                 </p>
               </div>
-              <input className={styles.input_field} type="text" />
+              <input
+                onChange={(e) => {
+                  setTitle(e.target.value)
+                }}
+                className={styles.input_field}
+                type="text"
+              />
             </div>
             <div className={styles.form_field}>
               <div>
@@ -123,7 +168,12 @@ const CreateEvent = () => {
                   This will be displayed as the event description
                 </p>
               </div>
-              <textarea className={styles.input_fielddesc} />
+              <textarea
+                onChange={(e) => {
+                  setDescription(e.target.value)
+                }}
+                className={styles.input_fielddesc}
+              />
             </div>
             <div className={styles.form_field}>
               <div>
@@ -132,7 +182,28 @@ const CreateEvent = () => {
                   Do mention the location of the event
                 </p>
               </div>
-              <input className={styles.input_field} type="text" />
+              <input
+                onChange={(e) => {
+                  setLocation(e.target.value)
+                }}
+                className={styles.input_field}
+                type="text"
+              />
+            </div>
+            <div className={styles.form_field}>
+              <div>
+                <p className={styles.field_label}>Create Slug</p>
+                <p className={styles.field_description}>
+                  Do mention the location of the event
+                </p>
+              </div>
+              <input
+                onChange={(e) => {
+                  setSlug(e.target.value)
+                }}
+                className={styles.input_field}
+                type="text"
+              />
             </div>
             <div className={styles.form_field}>
               <div>
@@ -142,8 +213,20 @@ const CreateEvent = () => {
                 </p>
               </div>
               <div className={styles.row}>
-                <input className={styles.input_field} type="date" />
-                <input className={styles.input_field} type="time" />
+                <input
+                  onChange={(e) => {
+                    setStartDate(e.target.value)
+                  }}
+                  className={styles.input_field}
+                  type="date"
+                />
+                <input
+                  onChange={(e) => {
+                    setStartTime(e.target.value)
+                  }}
+                  className={styles.input_field}
+                  type="time"
+                />
               </div>
             </div>
             <div className={styles.form_field}>
@@ -154,8 +237,20 @@ const CreateEvent = () => {
                 </p>
               </div>
               <div className={styles.row}>
-                <input className={styles.input_field} type="date" />
-                <input className={styles.input_field} type="time" />
+                <input
+                  onChange={(e) => {
+                    setEndDate(e.target.value)
+                  }}
+                  className={styles.input_field}
+                  type="date"
+                />
+                <input
+                  onChange={(e) => {
+                    setEndTime(e.target.value)
+                  }}
+                  className={styles.input_field}
+                  type="time"
+                />
               </div>
             </div>
             <div className={styles.form_field}>
@@ -166,7 +261,15 @@ const CreateEvent = () => {
                 </p>
               </div>
               <div className={styles.row}>
-                <select className={styles.input_field} name="cars" id="cars">
+                <select
+                  value={vertical}
+                  onChange={(e) => {
+                    console.log(e.target.value)
+                    setVertical(e.target.value)
+                  }}
+                  className={styles.input_field}
+                >
+                  <option>Select Vertical</option>
                   {verticals.map((vertical) => (
                     <option value={vertical.code}>{vertical.title}</option>
                   ))}
@@ -174,6 +277,24 @@ const CreateEvent = () => {
               </div>
             </div>
           </div>
+          <Wrap marginTop="2rem" spacing={4}>
+            <WrapItem>
+              <Button
+                onClick={() => {
+                  createEvent()
+                }}
+                size="md"
+                colorScheme="linkedin"
+              >
+                Create Events
+              </Button>
+            </WrapItem>
+            <WrapItem>
+              <Button variant="outline" size="md" colorScheme="linkedin">
+                Create Verticals
+              </Button>
+            </WrapItem>
+          </Wrap>
         </div>
       </div>
     </>
