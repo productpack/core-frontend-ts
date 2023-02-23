@@ -1,11 +1,4 @@
-import {
-  Button,
-  ButtonGroup,
-  Text,
-  useDisclosure,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/react"
+import { Button, ButtonGroup, Text, useDisclosure } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import SideBar from "../../../../Components/SideBar/SideBar"
 import styles from "./AwardPoints.module.css"
@@ -14,12 +7,10 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Checkbox,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
 } from "@chakra-ui/react"
 
@@ -33,12 +24,15 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react"
 import axios from "axios"
+import TagsTable from "../../../../Components/Admin/Tags/Tags"
 
 const AwardPoints = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [copyStatus, setCopyStatus] = useState(false)
+  const [awardPoint, setAwardPoint] = useState(0)
 
   const [checkedUserIds, setCheckedUserIds] = useState<number[]>([])
+  const [selectedTag, setSelectedTag] = useState<string>("")
   const [currentPage, setCurrentPage] = useState(1)
 
   const [discordStatus, setDiscordStatus] = useState({
@@ -72,6 +66,33 @@ const AwardPoints = () => {
       })
       .catch(function (error) {
         console.log(error.response.status)
+      })
+  }
+
+  const awardPoints = () => {
+    const body = {
+      awardee_list: checkedUserIds,
+      tag: selectedTag,
+      category: "student",
+      points: awardPoint,
+    }
+
+    console.log(body)
+
+    axios
+      .post(`${import.meta.env.VITE_APP_BACKEND_URL}/admin/award`, body, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      })
+      .then(function (response) {
+        console.log(response.data.data)
+        setCheckedUserIds([])
+        setSelectedTag("")
+        setAwardPoint(0)
+      })
+      .catch(function (error) {
+        console.log(error)
       })
   }
 
@@ -152,7 +173,7 @@ const AwardPoints = () => {
           </ModalContent>
         </Modal>
         <div className={styles.dashboard_container}>
-          <p className={styles.main_header}>Award Job Coins</p>
+          <p className={styles.main_header}>Select Users</p>
           <p className={styles.text_tagline}>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit
             corporis fugiat amet. Veritatis, quo commodi!
@@ -204,6 +225,45 @@ const AwardPoints = () => {
               </Button>
             </ButtonGroup>
           </TableContainer>
+          <div>
+            <p className={styles.main_header}>Select Tag</p>
+            <p className={styles.text_tagline}>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit
+              corporis fugiat amet. Veritatis, quo commodi!
+            </p>
+            <TagsTable
+              selectedTag={selectedTag}
+              setSelectedTag={setSelectedTag}
+            />
+          </div>
+
+          <div className={styles.award_points_container}>
+            <p className={styles.main_header}>Award Points</p>
+            <p className={styles.text_tagline}>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit
+              corporis fugiat amet. Veritatis, quo commodi!
+            </p>
+            <p className={styles.fv_input_field_label}>
+              Enter Amount of Points
+            </p>
+            <input
+              onChange={(e) => {
+                setAwardPoint(parseInt(e.target.value))
+              }}
+              type="number"
+              className={styles.input_field}
+            />
+          </div>
+          <Button
+            flexShrink="0"
+            marginTop="1rem"
+            onClick={() => {
+              awardPoints()
+            }}
+            colorScheme="linkedin"
+          >
+            Award Points
+          </Button>
         </div>
       </div>
     </>
