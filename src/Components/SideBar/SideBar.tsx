@@ -18,7 +18,7 @@ import { MdOutlineGrade } from "react-icons/md"
 import { AiOutlineHome } from "react-icons/ai"
 
 const SideBar = ({ onOpen }: { onOpen: any }) => {
-  const { toggleSidebar, broken } = useProSidebar()
+  const { toggleSidebar, broken, collapseSidebar } = useProSidebar()
   let navigate = useNavigate()
   return (
     <>
@@ -98,7 +98,7 @@ const SideBar = ({ onOpen }: { onOpen: any }) => {
           {localStorage.getItem("is_admin") === "true" && (
             <div>
               <Menu>
-                <p className={styles.menuHeader}>Admin Previlages</p>
+                <p className={styles.menuHeader}>Admin</p>
                 <SubMenu
                   className={styles.subHeader}
                   icon={<CiCalendar color="#59b4f0" size={25} />}
@@ -138,15 +138,6 @@ const SideBar = ({ onOpen }: { onOpen: any }) => {
             </div>
           )}
         </Sidebar>
-        <main>
-          <div>
-            {/* {broken && (
-              <button className="sb-button" onClick={() => toggleSidebar()}>
-                Toggle
-              </button>
-            )} */}
-          </div>
-        </main>
       </div>
     </>
   )

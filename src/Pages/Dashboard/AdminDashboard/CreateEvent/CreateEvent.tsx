@@ -13,6 +13,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react"
 import axios from "axios"
+import Navbar from "../../../../Components/Navbar/Navbar"
 
 const CreateEvent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -224,6 +225,7 @@ const CreateEvent = () => {
           </ModalContent>
         </Modal>
         <div className={styles.dashboard_container}>
+        <Navbar />
           <div>
             <p className={styles.main_header}>Events Create Form</p>
             <p className={styles.text_tagline}>

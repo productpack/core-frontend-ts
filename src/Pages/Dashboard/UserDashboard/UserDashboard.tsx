@@ -28,6 +28,7 @@ import {
 } from "@chakra-ui/react"
 
 import { Badge } from "@chakra-ui/react"
+import Navbar from "../../../Components/Navbar/Navbar"
 
 const UserDashboard = () => {
   const [userDetails, setUserDetails] = useState({
@@ -177,6 +178,7 @@ const UserDashboard = () => {
         </ModalContent>
       </Modal>
       <div className={styles.dashboard_container}>
+      <Navbar />
         <div>
           <p className={styles.welcome_text}>
             Hi, {userDetails ? userDetails.name : ""}{" "}

@@ -24,6 +24,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react"
 import axios from "axios"
+import Navbar from "../../../../Components/Navbar/Navbar"
 
 const AwardPoints = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -223,6 +224,7 @@ const AwardPoints = () => {
           </ModalContent>
         </Modal>
         <div className={styles.dashboard_container}>
+        <Navbar />
           <p className={styles.main_header}>Select Users</p>
           <p className={styles.text_tagline}>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit
