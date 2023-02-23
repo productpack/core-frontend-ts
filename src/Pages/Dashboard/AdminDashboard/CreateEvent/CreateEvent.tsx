@@ -141,58 +141,58 @@ const CreateEvent = () => {
 
   return (
     <>
-      <Modal
-        isOpen={isOpenVerticalModal}
-        onClose={() => {
-          onCloseVerticalModal()
-        }}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create Vertical</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            To create a vertical, enter a title and unique code. Click "Create".
-            Note: title and code can't be changed once created.
-            <div className={styles.form_field}>
-              <p className={styles.fv_input_field_label}>Vertical Code</p>
-              <input
-                value={newVerticalCode}
-                onChange={(e) => {
-                  setNewVericalCode(e.target.value)
-                }}
-                type="text"
-                className={styles.input_field}
-              />
-            </div>
-            <div className={styles.form_field}>
-              <p className={styles.fv_input_field_label}>Vertical Title</p>
-              <input
-                value={newVerticalTitle}
-                onChange={(e) => {
-                  setNewVerticalTitle(e.target.value)
-                }}
-                type="text"
-                className={styles.input_field}
-              />
-            </div>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button
-              colorScheme="blue"
-              mr={3}
-              onClick={() => {
-                createVertical()
-              }}
-            >
-              Create Vertical
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
       <div className={styles.main_container}>
         <SideBar onOpen={onOpen} />
+        <Modal
+          isOpen={isOpenVerticalModal}
+          onClose={() => {
+            onCloseVerticalModal()
+          }}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Create Vertical</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              To create a vertical, enter a title and unique code. Click
+              "Create". Note: title and code can't be changed once created.
+              <div className={styles.form_field}>
+                <p className={styles.fv_input_field_label}>Vertical Code</p>
+                <input
+                  value={newVerticalCode}
+                  onChange={(e) => {
+                    setNewVericalCode(e.target.value)
+                  }}
+                  type="text"
+                  className={styles.input_field}
+                />
+              </div>
+              <div className={styles.form_field}>
+                <p className={styles.fv_input_field_label}>Vertical Title</p>
+                <input
+                  value={newVerticalTitle}
+                  onChange={(e) => {
+                    setNewVerticalTitle(e.target.value)
+                  }}
+                  type="text"
+                  className={styles.input_field}
+                />
+              </div>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                onClick={() => {
+                  createVertical()
+                }}
+              >
+                Create Vertical
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
           <ModalOverlay />
           <ModalContent>

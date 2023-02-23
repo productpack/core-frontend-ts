@@ -7,6 +7,7 @@ import Login from "./Pages/Authentication/Login/Login"
 import ResetPassword from "./Pages/Authentication/ResetPassword/ResetPassword"
 import UserDashboard from "./Pages/Dashboard/UserDashboard/UserDashboard"
 import CreateEvent from "./Pages/Dashboard/AdminDashboard/CreateEvent/CreateEvent"
+import AwardPoints from "./Pages/Dashboard/AdminDashboard/AwardPoints/AwardPoints"
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
           <Route path="/user/dashboard" element={<UserDashboard />}></Route>
 
           <Route path="/admin/createevents" element={<CreateEvent />}></Route>
+
+          <Route path="/admin/awardpoints" element={<AwardPoints />}></Route>
         </Routes>
       </Router>
     </div>
