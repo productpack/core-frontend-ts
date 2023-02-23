@@ -8,6 +8,7 @@ import ResetPassword from "./Pages/Authentication/ResetPassword/ResetPassword"
 import UserDashboard from "./Pages/Dashboard/UserDashboard/UserDashboard"
 import CreateEvent from "./Pages/Dashboard/AdminDashboard/CreateEvent/CreateEvent"
 import AwardPoints from "./Pages/Dashboard/AdminDashboard/AwardPoints/AwardPoints"
+import ManageUsers from "./Pages/Dashboard/AdminDashboard/ManageUsers/ManageUsers"
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
           <Route path="/admin/createevents" element={<CreateEvent />}></Route>
 
           <Route path="/admin/awardpoints" element={<AwardPoints />}></Route>
+
+          <Route path="/admin/manageusers" element={<ManageUsers />}></Route>
         </Routes>
       </Router>
     </div>

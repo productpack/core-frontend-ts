@@ -24,8 +24,6 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react"
 import axios from "axios"
-// import axios from "axios"
-// import TagsTable from "../../../../Components/Admin/Tags/TagsTable"
 
 const AwardPoints = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -80,11 +78,11 @@ const AwardPoints = () => {
   }, [currentPage])
 
   const handlePreviousPageTag = () => {
-    setCurrentPage((prevPage) => prevPage - 1)
+    setCurrentPageTag((prevPage) => prevPage - 1)
   }
 
   const handleNextPageTag = () => {
-    setCurrentPage((prevPage) => prevPage + 1)
+    setCurrentPageTag((prevPage) => prevPage + 1)
   }
 
   const handleTagClick = (tagCode: string) => {
