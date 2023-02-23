@@ -16,6 +16,14 @@ import axios from "axios"
 
 const CreateEvent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const {
+    isOpen: isOpenVerticalModal,
+    onOpen: onOpenVerticalModal,
+    onClose: onCloseVerticalModal,
+  } = useDisclosure()
+
+  //For Storing the existing verticals(API Call)
   const [verticals, setVerticals] = useState([
     {
       code: "",
@@ -23,6 +31,7 @@ const CreateEvent = () => {
     },
   ])
 
+  //For Creating Events
   const [slug, setSlug] = useState("")
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -32,6 +41,10 @@ const CreateEvent = () => {
   const [enddate, setEndDate] = useState("")
   const [starttime, setStartTime] = useState("")
   const [endtime, setEndTime] = useState("")
+
+  //For Creating New Verticals
+  const [newVerticalCode, setNewVericalCode] = useState("")
+  const [newVerticalTitle, setNewVerticalTitle] = useState("")
 
   const [discordStatus, setDiscordStatus] = useState({
     discord_secret: "",
@@ -103,8 +116,81 @@ const CreateEvent = () => {
       })
   }
 
+  const createVertical = () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("access_token"),
+    }
+    axios
+      .post(
+        `${import.meta.env.VITE_APP_BACKEND_URL}/admin/vertical/add`,
+        {
+          code: newVerticalCode,
+          title: newVerticalTitle,
+        },
+        {
+          headers: headers,
+        }
+      )
+      .then((response) => {
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.log(error.response)
+      })
+  }
+
   return (
     <>
+      <Modal
+        isOpen={isOpenVerticalModal}
+        onClose={() => {
+          onCloseVerticalModal()
+        }}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Create Vertical</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            To create a vertical, enter a title and unique code. Click "Create".
+            Note: title and code can't be changed once created.
+            <div className={styles.form_field}>
+              <p className={styles.fv_input_field_label}>Vertical Code</p>
+              <input
+                value={newVerticalCode}
+                onChange={(e) => {
+                  setNewVericalCode(e.target.value)
+                }}
+                type="text"
+                className={styles.input_field}
+              />
+            </div>
+            <div className={styles.form_field}>
+              <p className={styles.fv_input_field_label}>Vertical Title</p>
+              <input
+                value={newVerticalTitle}
+                onChange={(e) => {
+                  setNewVerticalTitle(e.target.value)
+                }}
+                type="text"
+                className={styles.input_field}
+              />
+            </div>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={() => {
+                createVertical()
+              }}
+            >
+              Create Vertical
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <div className={styles.main_container}>
         <SideBar onOpen={onOpen} />
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -290,7 +376,14 @@ const CreateEvent = () => {
               </Button>
             </WrapItem>
             <WrapItem>
-              <Button variant="outline" size="md" colorScheme="linkedin">
+              <Button
+                onClick={() => {
+                  onOpenVerticalModal()
+                }}
+                variant="outline"
+                size="md"
+                colorScheme="linkedin"
+              >
                 Create Verticals
               </Button>
             </WrapItem>
