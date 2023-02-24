@@ -4,18 +4,7 @@ import SideBar from "../../../Components/SideBar/SideBar"
 
 import styles from "./UserDashboard.module.css"
 
-import { TbSum, TbSchool, TbBallpen, TbPlus } from "react-icons/tb"
-
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Stack,
-  Heading,
-  Text,
-  Button,
-  useDisclosure,
-} from "@chakra-ui/react"
+import { Text, Button, useDisclosure } from "@chakra-ui/react"
 
 import {
   Modal,
@@ -140,7 +129,7 @@ const UserDashboard = () => {
       <SideBar onOpen={onOpen} />
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
-         <ModalContent margin="1rem">
+        <ModalContent margin="1rem">
           <ModalHeader>Onboard Discord Server</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -240,37 +229,40 @@ const UserDashboard = () => {
             </p>
             <div className={styles.upcoming_events}>
               {upcomingEvents &&
-                upcomingEvents.map((event) => (
-                  <div className={styles.event_container}>
-                    <div className={styles.event_card}>
-                      <div>
-                        <h2 className={styles.event_name}>{event.title}</h2>
-                        <p className={styles.event_description}>
-                          {event.description.slice(0, 100)} . . .
-                        </p>
-                        <p className={styles.event_label}>
-                          Starting time:{" "}
-                          {event.start_time &&
-                            new Intl.DateTimeFormat("en-IN", {
-                              timeZone: "Asia/Kolkata",
-                              hour: "numeric",
-                              minute: "numeric",
-                              hour12: true,
-                              year: "numeric",
-                              month: "2-digit",
-                              day: "2-digit",
-                            }).format(new Date(event.start_time))}
-                        </p>
-                        <p className={styles.event_label}>
-                          Event Vertical: {event.vertical}
-                        </p>
+                upcomingEvents.map(
+                  (event) =>
+                    !event.is_past && (
+                      <div className={styles.event_container}>
+                        <div className={styles.event_card}>
+                          <div>
+                            <h2 className={styles.event_name}>{event.title}</h2>
+                            <p className={styles.event_description}>
+                              {event.description.slice(0, 100)} . . .
+                            </p>
+                            <p className={styles.event_label}>
+                              Starting time:{" "}
+                              {event.start_time &&
+                                new Intl.DateTimeFormat("en-IN", {
+                                  timeZone: "Asia/Kolkata",
+                                  hour: "numeric",
+                                  minute: "numeric",
+                                  hour12: true,
+                                  year: "numeric",
+                                  month: "2-digit",
+                                  day: "2-digit",
+                                }).format(new Date(event.start_time))}
+                            </p>
+                            <p className={styles.event_label}>
+                              Event Vertical: {event.vertical}
+                            </p>
+                          </div>
+                          <button className={styles.registration_button}>
+                            Register
+                          </button>
+                        </div>
                       </div>
-                      <button className={styles.registration_button}>
-                        Register
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                    )
+                )}
             </div>
           </div>
           <div className={styles.learning_materials}>
@@ -308,7 +300,7 @@ const UserDashboard = () => {
                   </h2>
                   <p className={styles.event_description}>
                     Advance your conceptual understanding in Product Management
-                    with the help of carefully curated learning materials. 
+                    with the help of carefully curated learning materials.
                   </p>
                   <p className={styles.event_label}>Course Type: Paid Course</p>
                   <a
@@ -327,7 +319,7 @@ const UserDashboard = () => {
                   <p className={styles.event_description}>
                     Success leaves us clues. Learn some golden wisdom nuggets
                     with the help of a curated collection of rare videos of the
-                    Legends in Product. 
+                    Legends in Product.
                   </p>
                   <p className={styles.event_label}>Course Type: Free Course</p>
                   <a

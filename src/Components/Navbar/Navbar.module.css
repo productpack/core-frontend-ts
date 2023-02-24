@@ -1,16 +1,16 @@
 .navbar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .navbar_logo {
-    height: 3.5rem;
-  }
-  
-  .navbar_menu {
-    height: 1.75rem;
-    margin-right: 0rem;
-  }
-  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.navbar_logo {
+  height: 3.5rem;
+}
+
+.navbar_menu {
+  height: 1.75rem;
+  margin-right: 0rem;
+}

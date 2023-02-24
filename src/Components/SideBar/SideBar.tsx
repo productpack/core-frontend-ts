@@ -78,8 +78,24 @@ const SideBar = ({ onOpen }: { onOpen: any }) => {
                 defaultOpen
                 label="Events"
               >
-                <MenuItem className={styles.menuItem}> Upcoming</MenuItem>
-                <MenuItem className={styles.menuItem}> Past Events</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    return navigate("/user/events/upcoming")
+                  }}
+                  className={styles.menuItem}
+                >
+                  {" "}
+                  Upcoming
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    return navigate("/user/events/past")
+                  }}
+                  className={styles.menuItem}
+                >
+                  {" "}
+                  Past Events
+                </MenuItem>
               </SubMenu>
 
               <MenuItem

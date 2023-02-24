@@ -9,6 +9,8 @@ import UserDashboard from "./Pages/Dashboard/UserDashboard/UserDashboard"
 import CreateEvent from "./Pages/Dashboard/AdminDashboard/CreateEvent/CreateEvent"
 import AwardPoints from "./Pages/Dashboard/AdminDashboard/AwardPoints/AwardPoints"
 import ManageUsers from "./Pages/Dashboard/AdminDashboard/ManageUsers/ManageUsers"
+import UpcomingEvents from "./Pages/Dashboard/UserDashboard/UpcomingEvents/UpcomingEvents"
+import PastEvents from "./Pages/Dashboard/UserDashboard/UpcomingEvents/PastEvents/PastEvents"
 
 function App() {
   return (
@@ -24,6 +26,13 @@ function App() {
           <Route path="/resetpassword" element={<ResetPassword />}></Route>
 
           <Route path="/user/dashboard" element={<UserDashboard />}></Route>
+
+          <Route
+            path="/user/events/upcoming"
+            element={<UpcomingEvents />}
+          ></Route>
+
+          <Route path="/user/events/past" element={<PastEvents />}></Route>
 
           <Route path="/admin/createevents" element={<CreateEvent />}></Route>
 
