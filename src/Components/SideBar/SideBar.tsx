@@ -130,6 +130,9 @@ const SideBar = ({ onOpen }: { onOpen: any }) => {
                 <MenuItem
                   icon={<FiUsers color="#59b4f0" size={25} />}
                   className={styles.menuItem}
+                  onClick={() => {
+                    return navigate("/admin/manageusers")
+                  }}
                 >
                   {" "}
                   Manage Users

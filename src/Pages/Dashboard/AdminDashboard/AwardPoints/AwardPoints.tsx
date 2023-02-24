@@ -1,4 +1,10 @@
-import { Button, ButtonGroup, Link, Text, useDisclosure } from "@chakra-ui/react"
+import {
+  Button,
+  ButtonGroup,
+  Link,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import SideBar from "../../../../Components/SideBar/SideBar"
 import styles from "./AwardPoints.module.css"
@@ -99,6 +105,18 @@ const AwardPoints = () => {
 
   const [users, setUsers] = useState<User[]>([])
 
+  const {
+    isOpen: isOpenNewTagModal,
+    onOpen: onOpenNewTagModal,
+    onClose: onCloseNewTagModal,
+  } = useDisclosure()
+
+  const [newTag, setNewTag] = useState({
+    code: "",
+    verticial: "",
+    desc: "",
+  })
+
   const getUsers = (page: number) => {
     axios
       .get(
@@ -189,6 +207,10 @@ const AwardPoints = () => {
     setCurrentPage((prevPage) => prevPage + 1)
   }
 
+  const createTags = () => {
+    console.log(newTag)
+  }
+
   return (
     <>
       <div className={styles.main_container}>
@@ -223,8 +245,58 @@ const AwardPoints = () => {
             </ModalFooter>
           </ModalContent>
         </Modal>
+        <Modal
+          isOpen={isOpenNewTagModal}
+          onClose={() => {
+            onCloseNewTagModal()
+          }}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Create Tags</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              To create a new tag, enter a title and unique code and a small
+              description. Click "Create". Note: Cannot be edited if created.
+              <div className={styles.form_field}>
+                <p className={styles.fv_input_field_label}>Tag Code</p>
+                <input
+                  // value={newTag?.code}
+                  // onChange={(e) => {
+                  //   setNewTag({ ...setNewTag, code: e.target.value})
+                  // }}
+                  type="text"
+                  className={styles.input_field}
+                />
+              </div>
+              <div className={styles.form_field}>
+                <p className={styles.fv_input_field_label}>Tag Title</p>
+                <input
+                  // value={newTag?.vertical}
+                  // onChange={(e) => {
+                  //   setNewTag(e.target.value)
+                  // }}
+                  type="text"
+                  className={styles.input_field}
+                />
+              </div>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                onClick={() => {
+                  // createVertical()
+                }}
+              >
+                Create Tag
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
         <div className={styles.dashboard_container}>
-        <Navbar />
+          <Navbar />
           <p className={styles.main_header}>Select Users</p>
           <p className={styles.text_tagline}>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit
@@ -285,55 +357,64 @@ const AwardPoints = () => {
               corporis fugiat amet. Veritatis, quo commodi!
             </p>
 
-            <Table variant="simple">
-              <Thead>
-                <Tr>
-                  <Th>Code</Th>
-                  <Th>Vertical</Th>
-                  <Th>Description</Th>
-                  <Th>Type</Th>
-                  <Th>Select Tag</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {tags.map((tag) => (
-                  <Tr key={tag.code}>
-                    <Td>
-                      <Link onClick={() => handleTagClick(tag.code)}>
-                        {tag.code}
-                      </Link>
-                    </Td>
-                    <Td>{tag.vertical}</Td>
-                    <Td>{tag.desc}</Td>
-                    <Td>{tag.type}</Td>
-                    <Td>
-                      <Checkbox
-                        size="lg"
-                        colorScheme="blue"
-                        isChecked={selectedTag === tag.code}
-                        onChange={() => handleTagClick(tag.code)}
-                      />
-                    </Td>
+            <TableContainer marginTop="2rem">
+              <Table backgroundColor="#FFFFFF">
+                <Thead>
+                  <Tr>
+                    <Th>Code</Th>
+                    <Th>Vertical</Th>
+                    <Th>Description</Th>
+                    <Th>Type</Th>
+                    <Th>Select Tag</Th>
                   </Tr>
-                ))}
-              </Tbody>
-              <ButtonGroup mt={4}>
-                <Button
-                  onClick={handlePreviousPageTag}
-                  isDisabled={currentPageTag === 1}
-                  colorScheme="linkedin"
-                >
-                  Previous
-                </Button>
-                <Button
-                  onClick={handleNextPageTag}
-                  isDisabled={tags.length < 5}
-                  colorScheme="linkedin"
-                >
-                  Next
-                </Button>
-              </ButtonGroup>
-            </Table>
+                </Thead>
+                <Tbody>
+                  {tags.map((tag) => (
+                    <Tr key={tag.code}>
+                      <Td>
+                        <Link onClick={() => handleTagClick(tag.code)}>
+                          {tag.code}
+                        </Link>
+                      </Td>
+                      <Td>{tag.vertical}</Td>
+                      <Td>{tag.desc}</Td>
+                      <Td>{tag.type}</Td>
+                      <Td>
+                        <Checkbox
+                          size="lg"
+                          colorScheme="blue"
+                          isChecked={selectedTag === tag.code}
+                          onChange={() => handleTagClick(tag.code)}
+                        />
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+                <ButtonGroup mt={4}>
+                  <Button
+                    onClick={handlePreviousPageTag}
+                    isDisabled={currentPageTag === 1}
+                    colorScheme="linkedin"
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    onClick={handleNextPageTag}
+                    isDisabled={tags.length < 5}
+                    colorScheme="linkedin"
+                  >
+                    Next
+                  </Button>
+                  <Button
+                    onClick={onOpenNewTagModal}
+                    colorScheme="linkedin"
+                    variant="outline"
+                  >
+                    Create Tags
+                  </Button>
+                </ButtonGroup>
+              </Table>
+            </TableContainer>
           </div>
 
           <div className={styles.award_points_container}>
