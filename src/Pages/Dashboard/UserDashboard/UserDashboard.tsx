@@ -178,7 +178,7 @@ const UserDashboard = () => {
         </ModalContent>
       </Modal>
       <div className={styles.dashboard_container}>
-      <Navbar />
+        <Navbar />
         <div>
           <p className={styles.welcome_text}>
             Hi, {userDetails ? userDetails.name : ""}{" "}
@@ -193,78 +193,44 @@ const UserDashboard = () => {
           </p>
         </div>
         <div>
-          <div>
-            <p className={styles.sub_header}>Total Points Gained</p>
-            <p className={styles.text_tagline}>
-              Join the product pack, earn points by participating in events and
-              completing learning tasks, and watch your total points grow.
-            </p>
-          </div>
-          <div className={styles.user_points}>
-            <div className={styles.user_point}>
-              <TbSum color="#303030" size={30} />
-              <p className={styles.points}>{userpoints.total_points}</p>
-              <p className={styles.points_title}>Total Points</p>
+          <div className={styles.points_container}>
+            <div className={styles.total_coins}>
+              <img
+                src="/assets/user/dashboard/packcoin.png"
+                alt=""
+                className={styles.avatar_image}
+              />
+              <div className={styles.total_coins_text}>
+                <p className={styles.coin_count}>{userpoints.total_points}</p>
+                <p className={styles.coin_label}>Pack Coins</p>
+                <p className={styles.coin_tagline}>Learn, Build & Earn</p>
+              </div>
             </div>
-            <div className={styles.user_point}>
-              <TbSchool color="#303030" size={30} />
-              <p className={styles.points}>{userpoints.student_points}</p>
-              <p className={styles.points_title}>Student Points</p>
+            <div className={styles.secondary_coins}>
+              <div className={styles.scoin_box}>
+                <p className={styles.scoin_label}>
+                  For <br /> Mentoring
+                </p>
+                <p className={styles.scoin_count}>{userpoints.mentor_points}</p>
+                <p className={styles.scoin_tagline}>Mentor Credits</p>
+              </div>
+              <div className={styles.scoin_box}>
+                <p className={styles.scoin_label}>
+                  For <br /> Community Engagement
+                </p>
+                <p className={styles.scoin_count}>{userpoints.common_points}</p>
+                <p className={styles.scoin_tagline}>Common Credits</p>
+              </div>
+              <div className={styles.scoin_box}>
+                <p className={styles.scoin_label}>
+                  For <br /> Learning
+                </p>
+                <p className={styles.scoin_count}>
+                  {userpoints.student_points}
+                </p>
+                <p className={styles.scoin_tagline}>Student Credits</p>
+              </div>
             </div>
-            <div className={styles.user_point}>
-              <TbBallpen color="#303030" size={30} />
-              <p className={styles.points}>{userpoints.mentor_points}</p>
-              <p className={styles.points_title}>Mentor Points</p>
-            </div>
-            <div className={styles.user_point}>
-              <TbPlus color="#303030" size={30} />
-              <p className={styles.points}>{userpoints.common_points}</p>
-              <p className={styles.points_title}>Common Points</p>
-            </div>
-          </div>
-          <div>
-            <p className={styles.sub_header}>Upcoming Events</p>
-            <p className={styles.text_tagline}>
-              Events are a great way to learn and experience new things!. Join
-              in now if you haven't yet.
-            </p>
-          </div>
-          <div className={styles.upcoming_events}>
-            {upcomingEvents &&
-              upcomingEvents.map((event) => (
-                <div className={styles.event_container}>
-                  <Card maxW="sm">
-                    <CardBody>
-                      <Stack mt="6" spacing="2">
-                        <Heading size="md">{event.title}</Heading>
-                        <Text fontSize="md" noOfLines={5}>
-                          {event.description}
-                        </Text>
-                        <Text as="b">Event Date and Time</Text>
-
-                        <Text>
-                          {event.start_time &&
-                            new Intl.DateTimeFormat("en-IN", {
-                              timeZone: "Asia/Kolkata",
-                              hour: "numeric",
-                              minute: "numeric",
-                              hour12: true,
-                              year: "numeric",
-                              month: "2-digit",
-                              day: "2-digit",
-                            }).format(new Date(event.start_time))}
-                        </Text>
-                      </Stack>
-                    </CardBody>
-
-                    <CardFooter>
-                      <Button variant="solid" colorScheme="blue">
-                        Register Now
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                </div>
-              ))}
           </div>
         </div>
       </div>
