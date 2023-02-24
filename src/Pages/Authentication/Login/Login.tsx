@@ -77,7 +77,7 @@ const Login = () => {
         }}
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent margin="1rem">
           <ModalHeader>Sent Reset Password Key</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -131,7 +131,7 @@ const Login = () => {
               </p>
               <p className={styles.fv_tagline}>
                 Hi There, Enter in your email and password to login to the your
-                product pack dashboardd.
+                product pack dashboard.
               </p>
             </div>
             <div className={styles.fv_input_form}>
@@ -200,11 +200,14 @@ const Login = () => {
               className={styles.fv_image}
             />
 
-            <p className={styles.quote}>
-              <span>"</span>People ignore design that ignores people.{" "}
-              <span>"</span>
-            </p>
-            <p className={styles.quote_author}>- Frank Chimero</p>
+            <div className={styles.quote_text}>
+              <p className={styles.quote}>
+                <span>"</span>People ignore design that ignores people.{" "}
+                <span>"</span>
+              </p>
+              <br />
+              <p className={styles.quote_author}>- Frank Chimero</p>
+            </div>
           </div>
         </div>
       </div>

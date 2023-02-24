@@ -1,3 +1,15 @@
+.main_container {
+  background-color: #ffffff;
+  opacity: 1;
+  background: repeating-linear-gradient(
+    45deg,
+    #f4f8fa,
+    #f4f8fa 2.5px,
+    #ffffff 2.5px,
+    #ffffff 12.5px
+  );
+}
+
 .testimonial_content {
   font-size: 1rem;
   font-family: "Poppins", sans-serif;
@@ -75,4 +87,10 @@
   margin-top: 1rem;
   font-family: "Poppins", sans-serif;
   font-size: 1rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .testimonials_container {
+    display: none;
+  }
 }

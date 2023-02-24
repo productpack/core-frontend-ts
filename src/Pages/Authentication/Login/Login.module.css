@@ -1,3 +1,15 @@
+.main_container {
+  background-color: #ffffff;
+  opacity: 1;
+  background: repeating-linear-gradient(
+    45deg,
+    #f4f8fa,
+    #f4f8fa 2.5px,
+    #ffffff 2.5px,
+    #ffffff 12.5px
+  );
+}
+
 .testimonial_content {
   font-size: 1rem;
   font-family: "Poppins", sans-serif;
@@ -16,7 +28,7 @@
 .first_view_container {
   margin: 2rem;
   display: flex;
-  min-height: 100vh;
+  min-height: 90vh;
   flex-direction: row-reverse;
   justify-content: space-evenly;
   flex-wrap: wrap;
@@ -68,26 +80,36 @@
 }
 
 .fv_image {
-  width: 75%;
+  width: 30rem;
 }
 
 .quote {
   font-family: "Montserrat", sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  display: inline;
 }
 
 .quote span {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
+  display: inline;
 }
 
 .quote_author {
   font-family: "Poppins", sans-serif;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+  display: inline;
+  text-align: right;
 }
 
 .fv_input_field_label {
   margin-top: 1rem;
   font-family: "Poppins", sans-serif;
   font-size: 1rem;
+}
+
+@media screen and (max-width: 1100px) {
+  .fv_image_container {
+    display: none;
+  }
 }

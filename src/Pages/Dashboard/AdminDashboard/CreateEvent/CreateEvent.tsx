@@ -151,7 +151,7 @@ const CreateEvent = () => {
           }}
         >
           <ModalOverlay />
-          <ModalContent>
+           <ModalContent margin="1rem">
             <ModalHeader>Create Vertical</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
@@ -196,7 +196,7 @@ const CreateEvent = () => {
         </Modal>
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
           <ModalOverlay />
-          <ModalContent>
+           <ModalContent margin="1rem">
             <ModalHeader>Onboard Discord Server</ModalHeader>
             <ModalCloseButton />
             <ModalBody>

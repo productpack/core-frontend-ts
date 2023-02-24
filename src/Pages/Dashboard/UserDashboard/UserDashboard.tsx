@@ -140,7 +140,7 @@ const UserDashboard = () => {
       <SideBar onOpen={onOpen} />
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
-        <ModalContent>
+         <ModalContent margin="1rem">
           <ModalHeader>Onboard Discord Server</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
