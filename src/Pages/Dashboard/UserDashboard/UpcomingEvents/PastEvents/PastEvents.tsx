@@ -153,9 +153,6 @@ const PastEvents = () => {
                         Event Vertical: {event.vertical}
                       </p>
                     </div>
-                    <button className={styles.registration_button}>
-                      Register
-                    </button>
                   </div>
                 </div>
               ))}

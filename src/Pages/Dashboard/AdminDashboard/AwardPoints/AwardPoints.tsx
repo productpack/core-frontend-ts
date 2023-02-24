@@ -4,6 +4,9 @@ import {
   Link,
   Text,
   useDisclosure,
+  Radio,
+  RadioGroup,
+  Stack,
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import SideBar from "../../../../Components/SideBar/SideBar"
@@ -39,6 +42,7 @@ const AwardPoints = () => {
 
   const [checkedUserIds, setCheckedUserIds] = useState<number[]>([])
   const [selectedTag, setSelectedTag] = useState<string>("")
+  const [category, setCategory] = useState<string>("")
   const [currentPage, setCurrentPage] = useState(1)
 
   const [discordStatus, setDiscordStatus] = useState({
@@ -142,7 +146,7 @@ const AwardPoints = () => {
     const body = {
       awardee_list: checkedUserIds,
       tag: selectedTag,
-      category: "student",
+      category: category,
       points: awardPoint,
     }
 
@@ -217,7 +221,7 @@ const AwardPoints = () => {
         <SideBar onOpen={onOpen} />
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
           <ModalOverlay />
-           <ModalContent margin="1rem">
+          <ModalContent margin="1rem">
             <ModalHeader>Onboard Discord Server</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
@@ -252,7 +256,7 @@ const AwardPoints = () => {
           }}
         >
           <ModalOverlay />
-           <ModalContent margin="1rem">
+          <ModalContent margin="1rem">
             <ModalHeader>Create Tags</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
@@ -420,9 +424,21 @@ const AwardPoints = () => {
           <div className={styles.award_points_container}>
             <p className={styles.main_header}>Award Points</p>
             <p className={styles.text_tagline}>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit
-              corporis fugiat amet. Veritatis, quo commodi!
+              Enter in the amount of points you wish to award along with the
+              awarding category to complete the process.
             </p>
+            <br />
+            <RadioGroup
+              className={styles.text_tagline}
+              onChange={setCategory}
+              value={category}
+            >
+              <Stack direction="row">
+                <Radio value="mentor">Mentoring</Radio>
+                <Radio value="communtiy">Community Engagement</Radio>
+                <Radio value="student">Learning</Radio>
+              </Stack>
+            </RadioGroup>
             <p className={styles.fv_input_field_label}>
               Enter Amount of Points
             </p>
