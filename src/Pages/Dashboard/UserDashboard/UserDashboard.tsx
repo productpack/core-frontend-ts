@@ -1,5 +1,5 @@
 import axios from "axios"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, ReactNode } from "react"
 import SideBar from "../../../Components/SideBar/SideBar"
 
 import styles from "./UserDashboard.module.css"
@@ -229,6 +229,116 @@ const UserDashboard = () => {
                   {userpoints.student_points}
                 </p>
                 <p className={styles.scoin_tagline}>Student Credits</p>
+              </div>
+            </div>
+          </div>
+          <div className={styles.upcoming_events_container}>
+            <p className={styles.heading_text}>Upcoming Events</p>
+            <p className={styles.text_tagline}>
+              Hey, It seems like we have a list of events incoming, keep a watch
+              on them. Events can provide you many new knowledge and pack coin.
+            </p>
+            <div className={styles.upcoming_events}>
+              {upcomingEvents &&
+                upcomingEvents.map((event) => (
+                  <div className={styles.event_container}>
+                    <div className={styles.event_card}>
+                      <div>
+                        <h2 className={styles.event_name}>{event.title}</h2>
+                        <p className={styles.event_description}>
+                          {event.description.slice(0, 100)} . . .
+                        </p>
+                        <p className={styles.event_label}>
+                          Starting time:{" "}
+                          {event.start_time &&
+                            new Intl.DateTimeFormat("en-IN", {
+                              timeZone: "Asia/Kolkata",
+                              hour: "numeric",
+                              minute: "numeric",
+                              hour12: true,
+                              year: "numeric",
+                              month: "2-digit",
+                              day: "2-digit",
+                            }).format(new Date(event.start_time))}
+                        </p>
+                        <p className={styles.event_label}>
+                          Event Vertical: {event.vertical}
+                        </p>
+                      </div>
+                      <button className={styles.registration_button}>
+                        Register
+                      </button>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+          <div className={styles.learning_materials}>
+            <p className={styles.heading_text}>Learning Materials</p>
+            <p className={styles.text_tagline}>
+              Hey, It seems like we have a list of events incoming, keep a watch
+              on them. Events can provide you many new knowledge and pack coin.
+            </p>
+            <div className={styles.upcoming_events}>
+              <div className={styles.event_container}>
+                <div className={styles.event_card}>
+                  <h2 className={styles.event_name}>
+                    Modern Product Management 101
+                  </h2>
+                  <p className={styles.event_description}>
+                    Learn the fundamentals of Product Management with the help
+                    of carefully curated learning materials. This one is a good
+                    place to start your product learning journey.
+                  </p>
+                  <p className={styles.event_label}>Course Type: Free Course</p>
+                  <a
+                    href="https://accidental-sunfish-cdf.notion.site/Modern-Product-Management-101-d8c27a04b43e402e9412e1aa5d29debb"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  ></a>
+                  <button className={styles.registration_button}>
+                    Register
+                  </button>
+                </div>
+              </div>
+              <div className={styles.event_container}>
+                <div className={styles.event_card}>
+                  <h2 className={styles.event_name}>
+                    Product Management Advanced
+                  </h2>
+                  <p className={styles.event_description}>
+                    Advance your conceptual understanding in Product Management
+                    with the help of carefully curated learning materials. 
+                  </p>
+                  <p className={styles.event_label}>Course Type: Paid Course</p>
+                  <a
+                    href="https://airtable.com/shr4aFtzwBdMnquLT"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  ></a>
+                  <button className={styles.registration_button}>
+                    Register
+                  </button>
+                </div>
+              </div>
+              <div className={styles.event_container}>
+                <div className={styles.event_card}>
+                  <h2 className={styles.event_name}>Lessons From Legends</h2>
+                  <p className={styles.event_description}>
+                    Success leaves us clues. Learn some golden wisdom nuggets
+                    with the help of a curated collection of rare videos of the
+                    Legends in Product. 
+                  </p>
+                  <p className={styles.event_label}>Course Type: Free Course</p>
+                  <a
+                    href="https://accidental-sunfish-cdf.notion.site/Modern-Product-Management-101-d8c27a04b43e402e9412e1aa5d29debb"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  ></a>
+                  <button className={styles.registration_button}>
+                    Register
+                  </button>
+                </div>
               </div>
             </div>
           </div>
