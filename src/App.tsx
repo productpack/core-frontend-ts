@@ -23,7 +23,7 @@ function App() {
 
           <Route path="/verify" element={<Verification />}></Route>
 
-          <Route path="/resetpassword" element={<ResetPassword />}></Route>
+          <Route path="/reset" element={<ResetPassword />}></Route>
 
           <Route path="/user/dashboard" element={<UserDashboard />}></Route>
 
