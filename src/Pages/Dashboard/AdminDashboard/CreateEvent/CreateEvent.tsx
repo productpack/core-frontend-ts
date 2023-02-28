@@ -1,4 +1,12 @@
-import { Button, Text, useDisclosure, Wrap, WrapItem } from "@chakra-ui/react"
+import {
+  Alert,
+  AlertIcon,
+  Button,
+  Text,
+  useDisclosure,
+  Wrap,
+  WrapItem,
+} from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import SideBar from "../../../../Components/SideBar/SideBar"
 import styles from "./CreateEvent.module.css"
@@ -52,7 +60,25 @@ const CreateEvent = () => {
     onboard_status: false,
   })
 
+  const [eventcreated, setEventCreated] = useState(0)
+  const [verticalcreated, setVerticalCreated] = useState(0)
+
   const [copyStatus, setCopyStatus] = useState(false)
+
+  useEffect(() => {
+    if (eventcreated) {
+      setSlug("")
+      setTitle("")
+      setDescription("")
+      setVertical("")
+      setLocation("")
+      setStartDate("")
+      setEndDate("")
+      setStartTime("")
+      setEndTime("")
+    }
+  }, [eventcreated])
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/discord`, {
@@ -111,9 +137,13 @@ const CreateEvent = () => {
       )
       .then((response) => {
         console.log(response.data)
+        if (response.data.status) {
+          setEventCreated(200)
+        }
       })
       .catch((error) => {
         console.log(error.response)
+        setEventCreated(404)
       })
   }
 
@@ -134,9 +164,13 @@ const CreateEvent = () => {
       )
       .then((response) => {
         console.log(response.data)
+        if (response.data.status) {
+          setVerticalCreated(200)
+        }
       })
       .catch((error) => {
         console.log(error.response)
+        setVerticalCreated(404)
       })
   }
 
@@ -151,7 +185,7 @@ const CreateEvent = () => {
           }}
         >
           <ModalOverlay />
-           <ModalContent margin="1rem">
+          <ModalContent margin="1rem">
             <ModalHeader>Create Vertical</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
@@ -179,6 +213,20 @@ const CreateEvent = () => {
                   className={styles.input_field}
                 />
               </div>
+              <br />
+              <div className={styles.alert_container}>
+                {verticalcreated === 200 ? (
+                  <Alert status="success" variant="left-accent">
+                    <AlertIcon />
+                    Vertical created successfully.
+                  </Alert>
+                ) : verticalcreated === 400 ? (
+                  <Alert status="error" variant="left-accent">
+                    <AlertIcon />
+                    Vertical creation failed!
+                  </Alert>
+                ) : null}
+              </div>
             </ModalBody>
 
             <ModalFooter>
@@ -196,7 +244,7 @@ const CreateEvent = () => {
         </Modal>
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
           <ModalOverlay />
-           <ModalContent margin="1rem">
+          <ModalContent margin="1rem">
             <ModalHeader>Onboard Discord Server</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
@@ -225,7 +273,7 @@ const CreateEvent = () => {
           </ModalContent>
         </Modal>
         <div className={styles.dashboard_container}>
-        <Navbar />
+          <Navbar />
           <div>
             <p className={styles.main_header}>Events Create Form</p>
             <p className={styles.text_tagline}>
@@ -242,6 +290,7 @@ const CreateEvent = () => {
                 </p>
               </div>
               <input
+                value={title}
                 onChange={(e) => {
                   setTitle(e.target.value)
                 }}
@@ -257,6 +306,7 @@ const CreateEvent = () => {
                 </p>
               </div>
               <textarea
+                value={description}
                 onChange={(e) => {
                   setDescription(e.target.value)
                 }}
@@ -271,6 +321,7 @@ const CreateEvent = () => {
                 </p>
               </div>
               <input
+                value={location}
                 onChange={(e) => {
                   setLocation(e.target.value)
                 }}
@@ -286,6 +337,7 @@ const CreateEvent = () => {
                 </p>
               </div>
               <input
+                value={slug}
                 onChange={(e) => {
                   setSlug(e.target.value)
                 }}
@@ -302,6 +354,7 @@ const CreateEvent = () => {
               </div>
               <div className={styles.row}>
                 <input
+                  value={startdate}
                   onChange={(e) => {
                     setStartDate(e.target.value)
                   }}
@@ -309,6 +362,7 @@ const CreateEvent = () => {
                   type="date"
                 />
                 <input
+                  value={starttime}
                   onChange={(e) => {
                     setStartTime(e.target.value)
                   }}
@@ -326,6 +380,7 @@ const CreateEvent = () => {
               </div>
               <div className={styles.row}>
                 <input
+                  value={enddate}
                   onChange={(e) => {
                     setEndDate(e.target.value)
                   }}
@@ -333,6 +388,7 @@ const CreateEvent = () => {
                   type="date"
                 />
                 <input
+                  value={endtime}
                   onChange={(e) => {
                     setEndTime(e.target.value)
                   }}
@@ -364,6 +420,19 @@ const CreateEvent = () => {
                 </select>
               </div>
             </div>
+          </div>
+          <div className={styles.alert_container}>
+            {eventcreated === 200 ? (
+              <Alert marginTop="1rem" status="success" variant="left-accent">
+                <AlertIcon />
+                Event created successfully.
+              </Alert>
+            ) : eventcreated === 400 ? (
+              <Alert  marginTop="1rem" status="error" variant="left-accent">
+                <AlertIcon />
+                Event creation failed!
+              </Alert>
+            ) : null}
           </div>
           <Wrap marginTop="2rem" spacing={4}>
             <WrapItem>

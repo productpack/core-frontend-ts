@@ -47,7 +47,7 @@
 .form_field {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 2rem;
+  margin-top: 1.25rem;
   justify-content: space-between;
 }
 
@@ -85,4 +85,14 @@
   padding-left: 0.75rem;
   height: 8rem;
   margin-right: 1rem;
+}
+
+.fv_input_field_label{
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.alert_container {
+  max-width: 24rem;
 }
