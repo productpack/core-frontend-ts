@@ -32,6 +32,12 @@ const CreateEvent = () => {
     onClose: onCloseVerticalModal,
   } = useDisclosure()
 
+  const {
+    isOpen: isOpenTagModal,
+    onOpen: onOpenTagModal,
+    onClose: onCloseTagModal,
+  } = useDisclosure()
+
   //For Storing the existing verticals(API Call)
   const [verticals, setVerticals] = useState([
     {
@@ -55,6 +61,11 @@ const CreateEvent = () => {
   const [newVerticalCode, setNewVericalCode] = useState("")
   const [newVerticalTitle, setNewVerticalTitle] = useState("")
 
+  //For Creating New Tags
+  const [newTagCode, setNewTagCode] = useState("")
+  const [newTagVertical, setNewTagVertical] = useState("")
+  const [newTagDescription, setNewTagDescription] = useState("")
+
   const [discordStatus, setDiscordStatus] = useState({
     discord_secret: "",
     onboard_status: false,
@@ -62,6 +73,7 @@ const CreateEvent = () => {
 
   const [eventcreated, setEventCreated] = useState(0)
   const [verticalcreated, setVerticalCreated] = useState(0)
+  const [tagcreated, setTagCreated] = useState(0)
 
   const [copyStatus, setCopyStatus] = useState(false)
 
@@ -174,6 +186,34 @@ const CreateEvent = () => {
       })
   }
 
+  const createTag = () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("access_token"),
+    }
+    axios
+      .post(
+        `${import.meta.env.VITE_APP_BACKEND_URL}/admin/tag/add`,
+        {
+          code: newTagCode,
+          vertical: newTagVertical,
+          desc: newTagDescription,
+        },
+        {
+          headers: headers,
+        }
+      )
+      .then((response) => {
+        console.log(response.data)
+        if (response.data.status) {
+          setTagCreated(200)
+        }
+      })
+      .catch((error) => {
+        console.log(error.response)
+        setTagCreated(404)
+      })
+  }
+
   return (
     <>
       <div className={styles.main_container}>
@@ -183,6 +223,7 @@ const CreateEvent = () => {
           onClose={() => {
             onCloseVerticalModal()
           }}
+          isCentered
         >
           <ModalOverlay />
           <ModalContent margin="1rem">
@@ -238,6 +279,90 @@ const CreateEvent = () => {
                 }}
               >
                 Create Vertical
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+        <Modal
+          isOpen={isOpenTagModal}
+          onClose={() => {
+            onCloseTagModal()
+          }}
+          isCentered
+        >
+          <ModalOverlay />
+          <ModalContent margin="1rem">
+            <ModalHeader>Create Tag</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              To create a vertical, enter a title and unique code. Click
+              "Create". Note: title and code can't be changed once created.
+              <div className={styles.form_field}>
+                <p className={styles.fv_input_field_label}>Tag Code</p>
+                <input
+                  value={newTagCode}
+                  onChange={(e) => {
+                    setNewTagCode(e.target.value)
+                  }}
+                  type="text"
+                  className={styles.input_field}
+                />
+              </div>
+              <div className={styles.form_field}>
+                <div>
+                  <p className={styles.fv_input_field_label}>Select Vertical</p>
+                </div>
+
+                <select
+                  value={newTagVertical}
+                  onChange={(e) => {
+                    console.log(e.target.value)
+                    setNewTagVertical(e.target.value)
+                  }}
+                  className={styles.input_field}
+                >
+                  <option>Select Vertical</option>
+                  {verticals.map((vertical) => (
+                    <option value={vertical.code}>{vertical.title}</option>
+                  ))}
+                </select>
+              </div>
+              <div className={styles.form_field}>
+                <p className={styles.fv_input_field_label}>Tag Description</p>
+                <input
+                  value={newTagDescription}
+                  onChange={(e) => {
+                    setNewTagDescription(e.target.value)
+                  }}
+                  type="text"
+                  className={styles.input_field}
+                />
+              </div>
+              <br />
+              <div className={styles.alert_container}>
+                {tagcreated === 200 ? (
+                  <Alert status="success" variant="left-accent">
+                    <AlertIcon />
+                    Tag created successfully.
+                  </Alert>
+                ) : tagcreated === 400 ? (
+                  <Alert status="error" variant="left-accent">
+                    <AlertIcon />
+                    Tag creation failed!
+                  </Alert>
+                ) : null}
+              </div>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                onClick={() => {
+                  createTag()
+                }}
+              >
+                Create Tag
               </Button>
             </ModalFooter>
           </ModalContent>
@@ -428,7 +553,7 @@ const CreateEvent = () => {
                 Event created successfully.
               </Alert>
             ) : eventcreated === 400 ? (
-              <Alert  marginTop="1rem" status="error" variant="left-accent">
+              <Alert marginTop="1rem" status="error" variant="left-accent">
                 <AlertIcon />
                 Event creation failed!
               </Alert>
@@ -456,6 +581,18 @@ const CreateEvent = () => {
                 colorScheme="linkedin"
               >
                 Create Verticals
+              </Button>
+            </WrapItem>
+            <WrapItem>
+              <Button
+                onClick={() => {
+                  onOpenTagModal()
+                }}
+                variant="outline"
+                size="md"
+                colorScheme="linkedin"
+              >
+                Create Tags
               </Button>
             </WrapItem>
           </Wrap>
