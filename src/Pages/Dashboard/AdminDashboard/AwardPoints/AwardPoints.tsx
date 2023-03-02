@@ -7,6 +7,8 @@ import {
   Radio,
   RadioGroup,
   Stack,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import SideBar from "../../../../Components/SideBar/SideBar"
@@ -45,6 +47,20 @@ const AwardPoints = () => {
   const [category, setCategory] = useState<string>("")
   const [currentPage, setCurrentPage] = useState(1)
 
+  //For Creating New Tags
+  const [newTagCode, setNewTagCode] = useState("")
+  const [newTagVertical, setNewTagVertical] = useState("")
+  const [newTagDescription, setNewTagDescription] = useState("")
+  const [tagcreated, setTagCreated] = useState(0)
+
+  //For Storing the existing verticals(API Call)
+  const [verticals, setVerticals] = useState([
+    {
+      code: "",
+      title: "",
+    },
+  ])
+
   const [discordStatus, setDiscordStatus] = useState({
     discord_secret: "",
     onboard_status: false,
@@ -79,6 +95,7 @@ const AwardPoints = () => {
         }
       )
       setTags(response.data.data)
+      console.log(response.data.data)
     } catch (error) {
       console.error(error)
     }
@@ -169,6 +186,25 @@ const AwardPoints = () => {
       })
   }
 
+  axios
+    .get(
+      `${
+        import.meta.env.VITE_APP_BACKEND_URL
+      }/admin/list/verticals?limit=10&page=1`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      }
+    )
+    .then(function (response) {
+      console.log(response.data.data)
+      setVerticals(response.data.data)
+    })
+    .catch(function (error) {
+      console.log(error.response.status)
+    })
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/discord`, {
@@ -211,8 +247,32 @@ const AwardPoints = () => {
     setCurrentPage((prevPage) => prevPage + 1)
   }
 
-  const createTags = () => {
-    console.log(newTag)
+  const createTag = () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("access_token"),
+    }
+    axios
+      .post(
+        `${import.meta.env.VITE_APP_BACKEND_URL}/admin/tag/add`,
+        {
+          code: newTagCode,
+          vertical: newTagVertical,
+          desc: newTagDescription,
+        },
+        {
+          headers: headers,
+        }
+      )
+      .then((response) => {
+        console.log(response.data)
+        if (response.data.status) {
+          setTagCreated(200)
+        }
+      })
+      .catch((error) => {
+        console.log(error.response)
+        setTagCreated(404)
+      })
   }
 
   return (
@@ -260,29 +320,62 @@ const AwardPoints = () => {
             <ModalHeader>Create Tags</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              To create a new tag, enter a title and unique code and a small
-              description. Click "Create". Note: Cannot be edited if created.
+              To create a vertical, enter a title and unique code. Click
+              "Create". Note: title and code can't be changed once created.
               <div className={styles.form_field}>
                 <p className={styles.fv_input_field_label}>Tag Code</p>
                 <input
-                  // value={newTag?.code}
-                  // onChange={(e) => {
-                  //   setNewTag({ ...setNewTag, code: e.target.value})
-                  // }}
+                  value={newTagCode}
+                  onChange={(e) => {
+                    setNewTagCode(e.target.value)
+                  }}
                   type="text"
                   className={styles.input_field}
                 />
               </div>
               <div className={styles.form_field}>
-                <p className={styles.fv_input_field_label}>Tag Title</p>
+                <div>
+                  <p className={styles.fv_input_field_label}>Select Vertical</p>
+                </div>
+
+                <select
+                  value={newTagVertical}
+                  onChange={(e) => {
+                    console.log(e.target.value)
+                    setNewTagVertical(e.target.value)
+                  }}
+                  className={styles.input_field}
+                >
+                  <option>Select Vertical</option>
+                  {verticals.map((vertical) => (
+                    <option value={vertical.code}>{vertical.title}</option>
+                  ))}
+                </select>
+              </div>
+              <div className={styles.form_field}>
+                <p className={styles.fv_input_field_label}>Tag Description</p>
                 <input
-                  // value={newTag?.vertical}
-                  // onChange={(e) => {
-                  //   setNewTag(e.target.value)
-                  // }}
+                  value={newTagDescription}
+                  onChange={(e) => {
+                    setNewTagDescription(e.target.value)
+                  }}
                   type="text"
                   className={styles.input_field}
                 />
+              </div>
+              <br />
+              <div className={styles.alert_container}>
+                {tagcreated === 200 ? (
+                  <Alert status="success" variant="left-accent">
+                    <AlertIcon />
+                    Tag created successfully.
+                  </Alert>
+                ) : tagcreated === 400 ? (
+                  <Alert status="error" variant="left-accent">
+                    <AlertIcon />
+                    Tag creation failed!
+                  </Alert>
+                ) : null}
               </div>
             </ModalBody>
 

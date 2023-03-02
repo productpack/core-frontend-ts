@@ -130,8 +130,6 @@ const SideBar = ({ onOpen }: { onOpen: any }) => {
                     {" "}
                     Add Events
                   </MenuItem>
-
-                  <MenuItem className={styles.menuItem}> Add Tags</MenuItem>
                 </SubMenu>
                 <MenuItem
                   icon={<MdOutlineGrade color="#59b4f0" size={25} />}
