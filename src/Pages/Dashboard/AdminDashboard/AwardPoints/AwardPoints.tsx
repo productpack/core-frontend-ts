@@ -182,7 +182,10 @@ const AwardPoints = () => {
       })
   }
 
-  axios
+
+
+  useEffect(() => {
+    axios
     .get(
       `${
         import.meta.env.VITE_APP_BACKEND_URL
@@ -200,8 +203,7 @@ const AwardPoints = () => {
     .catch(function (error) {
       console.log(error.response.status)
     })
-
-  useEffect(() => {
+    
     axios
       .get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/discord`, {
         headers: {
