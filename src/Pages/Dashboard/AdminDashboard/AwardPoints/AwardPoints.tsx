@@ -47,6 +47,11 @@ const AwardPoints = () => {
   const [category, setCategory] = useState<string>("")
   const [currentPage, setCurrentPage] = useState(1)
 
+  const [awardStatus, setAwardStatus] = useState({
+    success_list: [],
+    fail_list: [],
+  })
+
   //For Creating New Tags
   const [newTagCode, setNewTagCode] = useState("")
   const [newTagVertical, setNewTagVertical] = useState("")
@@ -91,9 +96,7 @@ const AwardPoints = () => {
         }
       )
       setTags(response.data.data)
-    } catch (error) {
-      console.error(error)
-    }
+    } catch (error) {}
   }
 
   useEffect(() => {
@@ -169,6 +172,35 @@ const AwardPoints = () => {
         setCheckedUserIds([])
         setSelectedTag("")
         setAwardPoint(0)
+        setAwardStatus(response.data.data)
+
+        if (response.data.data.success_list.length > 0) {
+          console.clear();
+          console.log("Success List")
+          console.log("----------------")
+          console.log("Tag Name:" + selectedTag)
+          console.log("Category:" + category)
+          console.log("Points:" + awardPoint)
+          users.filter((user) => {
+            response.data.data.success_list.map((successUser: String) => {
+              if (user.user_id === successUser) {
+                console.log("Username:" +user.name)
+              }
+            })
+          })
+        }
+        if (response.data.data.fail_list.length > 0) {
+          console.clear();
+          console.log("Fail List")
+          console.log("----------------")
+          users.filter((user) => {
+            response.data.data.fail_list.map((failUser: String) => {
+              if (user.user_id === failUser) {
+                console.log("Username:" +user.name)
+              }
+            })
+          })
+        }
       })
       .catch(function (error) {})
   }
@@ -520,6 +552,23 @@ const AwardPoints = () => {
               type="number"
               className={styles.input_field}
             />
+          </div>
+          <div className={styles.alert_container}>
+            {awardStatus.success_list.length > 0 ? (
+              <Alert status="success" variant="left-accent">
+                <AlertIcon />
+                Sucessfully Awarded Points to {
+                  awardStatus.success_list.length
+                }{" "}
+                Learners. View console.log for more details.
+              </Alert>
+            ) : awardStatus.fail_list.length > 0 ? (
+              <Alert status="error" variant="left-accent">
+                <AlertIcon />
+                Failed to Awarded Points to {awardStatus.fail_list.length}{" "}
+                Learners. View console.log for more details.
+              </Alert>
+            ) : null}
           </div>
           <Button
             flexShrink="0"
