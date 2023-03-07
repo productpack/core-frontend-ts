@@ -78,10 +78,6 @@ const AwardPoints = () => {
 
   const [currentPageTag, setCurrentPageTag] = useState(1)
 
-  useEffect(() => {
-    fetchTags(1)
-  }, [])
-
   const fetchTags = async (page: number) => {
     try {
       const response = await axios.get(
@@ -102,8 +98,8 @@ const AwardPoints = () => {
   }
 
   useEffect(() => {
-    fetchTags(currentPage)
-  }, [currentPage])
+    fetchTags(currentPageTag)
+  }, [currentPageTag])
 
   const handlePreviousPageTag = () => {
     setCurrentPageTag((prevPage) => prevPage - 1)
@@ -221,6 +217,7 @@ const AwardPoints = () => {
       })
 
     getUsers(1)
+    fetchTags(1)
   }, [])
 
   const handleCheckboxChange = (
@@ -384,7 +381,7 @@ const AwardPoints = () => {
                 colorScheme="blue"
                 mr={3}
                 onClick={() => {
-                  // createVertical()
+                  createTag()
                 }}
               >
                 Create Tag

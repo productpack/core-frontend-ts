@@ -406,7 +406,7 @@ const CreateEvent = () => {
               the respective data.
             </p>
           </div>
-          <div className={styles.form_fields}>
+          <form className={styles.form_fields}>
             <div className={styles.form_field}>
               <div>
                 <p className={styles.field_label}>Event Name</p>
@@ -416,6 +416,7 @@ const CreateEvent = () => {
               </div>
               <input
                 value={title}
+                required
                 onChange={(e) => {
                   setTitle(e.target.value)
                 }}
@@ -431,6 +432,7 @@ const CreateEvent = () => {
                 </p>
               </div>
               <textarea
+                required
                 value={description}
                 onChange={(e) => {
                   setDescription(e.target.value)
@@ -447,6 +449,7 @@ const CreateEvent = () => {
               </div>
               <input
                 value={location}
+                required
                 onChange={(e) => {
                   setLocation(e.target.value)
                 }}
@@ -463,6 +466,7 @@ const CreateEvent = () => {
               </div>
               <input
                 value={slug}
+                required
                 onChange={(e) => {
                   setSlug(e.target.value)
                 }}
@@ -480,6 +484,7 @@ const CreateEvent = () => {
               <div className={styles.row}>
                 <input
                   value={startdate}
+                  required
                   onChange={(e) => {
                     setStartDate(e.target.value)
                   }}
@@ -506,6 +511,7 @@ const CreateEvent = () => {
               <div className={styles.row}>
                 <input
                   value={enddate}
+                  required
                   onChange={(e) => {
                     setEndDate(e.target.value)
                   }}
@@ -514,6 +520,7 @@ const CreateEvent = () => {
                 />
                 <input
                   value={endtime}
+                  required
                   onChange={(e) => {
                     setEndTime(e.target.value)
                   }}
@@ -532,6 +539,7 @@ const CreateEvent = () => {
               <div className={styles.row}>
                 <select
                   value={vertical}
+                  required
                   onChange={(e) => {
                     console.log(e.target.value)
                     setVertical(e.target.value)
@@ -545,7 +553,7 @@ const CreateEvent = () => {
                 </select>
               </div>
             </div>
-          </div>
+          </form>
           <div className={styles.alert_container}>
             {eventcreated === 200 ? (
               <Alert marginTop="1rem" status="success" variant="left-accent">
@@ -562,6 +570,7 @@ const CreateEvent = () => {
           <Wrap marginTop="2rem" spacing={4}>
             <WrapItem>
               <Button
+                type="submit"
                 onClick={() => {
                   createEvent()
                 }}
