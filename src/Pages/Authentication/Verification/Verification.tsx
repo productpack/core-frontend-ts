@@ -58,28 +58,18 @@ const Verification = () => {
             alt=""
             className={styles.fv_image}
           />
-          <PasswordChecklist
-            className={styles.password_checklist}
-            validColor="#2f8cc9"
-            invalidColor="#404040"
-            rules={["minLength", "specialChar", "number", "capital", "match"]}
-            minLength={8}
-            value={password}
-            valueAgain={passwordAgain}
-            onChange={(isValid) => {
-              setIsValid(isValid)
-            }}
-          />
-        </div>
-        <div className={styles.form_container}>
-          <div className={styles.fv_texts}>
-            <p className={styles.fv_heading}>
-              Kindly, Complete the verification and Set Password to signup.
+          <p className={styles.fv_heading}>
+          Verification Done. Set password to Sign Up.
             </p>
             <p className={styles.fv_tagline}>
               Hi There, Enter in your username and password to complete the
               signup process and to login to your product pack dashboard.
             </p>
+        </div>
+        <div className={styles.form_container}>
+          <div className={styles.fv_texts}>
+          
+           
           </div>
           <div className={styles.fv_input_form}>
             <p className={styles.fv_input_field_label}>Email Address</p>
@@ -102,6 +92,20 @@ const Verification = () => {
               className={styles.input_field}
             />
           </div>
+
+          <PasswordChecklist
+            className={styles.password_checklist}
+            validColor="#2f8cc9"
+            invalidColor="#404040"
+            rules={["minLength", "specialChar", "number", "capital", "match"]}
+            minLength={8}
+            value={password}
+            valueAgain={passwordAgain}
+            onChange={(isValid) => {
+              setIsValid(isValid)
+            }}
+          />
+          <br/>
           {status && (status === 200 || status === 400) && (
             <Alert
               marginTop="2rem"
