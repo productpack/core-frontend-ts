@@ -145,7 +145,7 @@ const UserDashboard = () => {
           </ModalBody>
           <ModalFooter>
             <a
-              href="https://discord.gg/hTCsB3SC"
+              href="https://www.productpack.in/"
               target="_blank"
               rel="noopener noreferrer"
             >

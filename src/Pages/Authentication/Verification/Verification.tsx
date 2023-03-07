@@ -4,7 +4,7 @@ import styles from "./Verification.module.css"
 
 import PasswordChecklist from "react-password-checklist"
 import axios from "axios"
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 
 import {
   Alert,
@@ -19,6 +19,8 @@ const Verification = () => {
   const [passwordAgain, setPasswordAgain] = useState("")
   const [isvalid, setIsValid] = useState(false)
   const [searchParams] = useSearchParams()
+
+  let navigate = useNavigate()
 
   const [status, setStatus] = useState(1)
   const [statusMessage, setStatusMessage] = useState("")
@@ -36,13 +38,18 @@ const Verification = () => {
         password: passwordAgain,
       })
       .then(function (response) {
+        console.log(response)
+        localStorage.setItem("access_token", response.data.data.access_token)
+        localStorage.setItem("is_admin", "false")
         setStatus(response.status)
         setStatusMessage("SignUp Is Successfully Completed.")
+        return navigate("/user/dashboard")
       })
       .catch(function (error) {
         setStatus(error.response.status)
         if (isvalid) {
           setStatusMessage("User Already Verified, Please Login!")
+          return navigate("/login")
         } else {
           setStatusMessage("Password Doesn't Meet Security Requirements!")
         }
@@ -108,7 +115,6 @@ const Verification = () => {
           <br/>
           {status && (status === 200 || status === 400) && (
             <Alert
-              marginTop="2rem"
               marginBottom="2rem"
               variant="left-accent"
               width="80%"
