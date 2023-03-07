@@ -34,7 +34,7 @@ const UpcomingEvents = () => {
         },
       })
       .then(function (response) {
-        console.log(response.data.data)
+
 
         if (!response.data.data.onboard_status) {
           onOpen()
@@ -46,17 +46,17 @@ const UpcomingEvents = () => {
         )
       })
       .catch(function (error) {
-        console.log(error)
+
       })
 
     axios
       .get(`${import.meta.env.VITE_APP_BACKEND_URL}/events/upcoming`)
       .then(function (response) {
-        console.log(response.data.data)
+
         setUpcomingEvents(response.data.data)
       })
       .catch(function (error) {
-        console.log(error)
+
       })
   }, [])
 

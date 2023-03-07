@@ -61,11 +61,11 @@ const ManageUsers = () => {
         }
       )
       .then(function (response) {
-        console.log(response.data.data)
+ 
         setUsers(response.data.data)
       })
       .catch(function (error) {
-        console.log(error.response.status)
+
       })
   }
   useEffect(() => {
@@ -76,11 +76,11 @@ const ManageUsers = () => {
         },
       })
       .then(function (response) {
-        console.log(response.data.data)
+
         setDiscordStatus(response.data.data)
       })
       .catch(function (error) {
-        console.log(error.response.status)
+ 
       })
 
     getUsers(1)
@@ -174,7 +174,7 @@ const ManageUsers = () => {
                         )}
                         onChange={(event) => {
                           handleCheckboxChange(event, parseInt(user.user_id))
-                          console.log(checkedUserIds)
+
                         }}
                         value={user.user_id}
                       />

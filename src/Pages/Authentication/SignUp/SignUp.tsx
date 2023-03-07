@@ -22,12 +22,10 @@ const SignUp = () => {
         email: email,
       })
       .then(function (response) {
-        console.log(response.status)
         setStatus(response.status)
         setStatusMessage("SignUp Procedure Started! Checkout your Email.")
       })
       .catch(function (error) {
-        console.log(error.response.status)
         setStatus(error.response.status)
         setStatusMessage(
           "User Already Registered. Kindly, Checkout your Email."

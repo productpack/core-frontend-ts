@@ -70,12 +70,9 @@ const UserDashboard = () => {
         },
       })
       .then(function (response) {
-        console.log(response.data.detail)
         setUserDetails(response.data.detail)
       })
-      .catch(function (error) {
-        console.log(error.response.status)
-      })
+      .catch(function (error) {})
 
     axios
       .get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/score`, {
@@ -84,12 +81,9 @@ const UserDashboard = () => {
         },
       })
       .then(function (response) {
-        console.log(response.data.detail)
         setUserpoints(response.data.detail)
       })
-      .catch(function (error) {
-        console.log(error)
-      })
+      .catch(function (error) {})
 
     axios
       .get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/discord`, {
@@ -98,8 +92,6 @@ const UserDashboard = () => {
         },
       })
       .then(function (response) {
-        console.log(response.data.data)
-
         if (!response.data.data.onboard_status) {
           onOpen()
         }
@@ -109,19 +101,14 @@ const UserDashboard = () => {
           response.data.data.onboard_status
         )
       })
-      .catch(function (error) {
-        console.log(error)
-      })
+      .catch(function (error) {})
 
     axios
       .get(`${import.meta.env.VITE_APP_BACKEND_URL}/events/upcoming`)
       .then(function (response) {
-        console.log(response.data.data)
         setUpcomingEvents(response.data.data)
       })
-      .catch(function (error) {
-        console.log(error)
-      })
+      .catch(function (error) {})
   }, [])
 
   return (

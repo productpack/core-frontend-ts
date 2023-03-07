@@ -6,11 +6,7 @@ import PasswordChecklist from "react-password-checklist"
 import axios from "axios"
 import { useNavigate, useSearchParams } from "react-router-dom"
 
-import {
-  Alert,
-  AlertIcon,
-  AlertDescription,
-} from "@chakra-ui/react"
+import { Alert, AlertIcon, AlertDescription } from "@chakra-ui/react"
 
 const Verification = () => {
   const [email, setEmail] = useState("")
@@ -38,7 +34,6 @@ const Verification = () => {
         password: passwordAgain,
       })
       .then(function (response) {
-        console.log(response)
         localStorage.setItem("access_token", response.data.data.access_token)
         localStorage.setItem("is_admin", "false")
         setStatus(response.status)
@@ -66,18 +61,15 @@ const Verification = () => {
             className={styles.fv_image}
           />
           <p className={styles.fv_heading}>
-          Verification Done. Set password to Sign Up.
-            </p>
-            <p className={styles.fv_tagline}>
-              Hi There, Enter in your username and password to complete the
-              signup process and to login to your product pack dashboard.
-            </p>
+            Verification Done. Set password to Sign Up.
+          </p>
+          <p className={styles.fv_tagline}>
+            Hi There, Enter in your username and password to complete the signup
+            process and to login to your product pack dashboard.
+          </p>
         </div>
         <div className={styles.form_container}>
-          <div className={styles.fv_texts}>
-          
-           
-          </div>
+          <div className={styles.fv_texts}></div>
           <div className={styles.fv_input_form}>
             <p className={styles.fv_input_field_label}>Email Address</p>
             <input
@@ -112,7 +104,7 @@ const Verification = () => {
               setIsValid(isValid)
             }}
           />
-          <br/>
+          <br />
           {status && (status === 200 || status === 400) && (
             <Alert
               marginBottom="2rem"

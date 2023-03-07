@@ -99,12 +99,9 @@ const CreateEvent = () => {
         },
       })
       .then(function (response) {
-        console.log(response.data.data)
         setDiscordStatus(response.data.data)
       })
-      .catch(function (error) {
-        console.log(error.response.status)
-      })
+      .catch(function (error) {})
 
     axios
       .get(
@@ -118,12 +115,9 @@ const CreateEvent = () => {
         }
       )
       .then(function (response) {
-        console.log(response.data.data)
         setVerticals(response.data.data)
       })
-      .catch(function (error) {
-        console.log(error.response.status)
-      })
+      .catch(function (error) {})
   }, [])
 
   const createEvent = () => {
@@ -148,13 +142,11 @@ const CreateEvent = () => {
         }
       )
       .then((response) => {
-        console.log(response.data)
         if (response.data.status) {
           setEventCreated(200)
         }
       })
       .catch((error) => {
-        console.log(error.response)
         setEventCreated(404)
       })
   }
@@ -175,13 +167,11 @@ const CreateEvent = () => {
         }
       )
       .then((response) => {
-        console.log(response.data)
         if (response.data.status) {
           setVerticalCreated(200)
         }
       })
       .catch((error) => {
-        console.log(error.response)
         setVerticalCreated(404)
       })
   }
@@ -203,13 +193,11 @@ const CreateEvent = () => {
         }
       )
       .then((response) => {
-        console.log(response.data)
         if (response.data.status) {
           setTagCreated(200)
         }
       })
       .catch((error) => {
-        console.log(error.response)
         setTagCreated(404)
       })
   }
@@ -316,7 +304,6 @@ const CreateEvent = () => {
                 <select
                   value={newTagVertical}
                   onChange={(e) => {
-                    console.log(e.target.value)
                     setNewTagVertical(e.target.value)
                   }}
                   className={styles.input_field}
@@ -461,7 +448,8 @@ const CreateEvent = () => {
               <div>
                 <p className={styles.field_label}>Create Slug</p>
                 <p className={styles.field_description}>
-                  Do mention the location of the event
+                  This keyword will be used to identify the event and used in
+                  the URL.
                 </p>
               </div>
               <input
@@ -478,7 +466,7 @@ const CreateEvent = () => {
               <div>
                 <p className={styles.field_label}>Starting Time</p>
                 <p className={styles.field_description}>
-                  Lorem ipsum dolor sit amet consectetur.
+                  So, When is the event starting?
                 </p>
               </div>
               <div className={styles.row}>
@@ -504,9 +492,7 @@ const CreateEvent = () => {
             <div className={styles.form_field}>
               <div>
                 <p className={styles.field_label}>Ending Time</p>
-                <p className={styles.field_description}>
-                  Lorem ipsum dolor sit amet consectetur.
-                </p>
+                <p className={styles.field_description}>When does it end?</p>
               </div>
               <div className={styles.row}>
                 <input
@@ -533,7 +519,8 @@ const CreateEvent = () => {
               <div>
                 <p className={styles.field_label}>Select Vertical</p>
                 <p className={styles.field_description}>
-                  Lorem ipsum dolor sit amet consectetur.
+                  To which verticial does this event belong to?. If the vertical
+                  is not found create one.
                 </p>
               </div>
               <div className={styles.row}>
@@ -541,7 +528,6 @@ const CreateEvent = () => {
                   value={vertical}
                   required
                   onChange={(e) => {
-                    console.log(e.target.value)
                     setVertical(e.target.value)
                   }}
                   className={styles.input_field}

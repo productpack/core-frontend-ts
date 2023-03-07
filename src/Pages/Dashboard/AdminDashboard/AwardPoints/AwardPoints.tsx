@@ -91,7 +91,6 @@ const AwardPoints = () => {
         }
       )
       setTags(response.data.data)
-      console.log(response.data.data)
     } catch (error) {
       console.error(error)
     }
@@ -147,12 +146,9 @@ const AwardPoints = () => {
         }
       )
       .then(function (response) {
-        console.log(response.data.data)
         setUsers(response.data.data)
       })
-      .catch(function (error) {
-        console.log(error.response.status)
-      })
+      .catch(function (error) {})
   }
 
   const awardPoints = () => {
@@ -163,8 +159,6 @@ const AwardPoints = () => {
       points: awardPoint,
     }
 
-    console.log(body)
-
     axios
       .post(`${import.meta.env.VITE_APP_BACKEND_URL}/admin/award`, body, {
         headers: {
@@ -172,38 +166,30 @@ const AwardPoints = () => {
         },
       })
       .then(function (response) {
-        console.log(response.data.data)
         setCheckedUserIds([])
         setSelectedTag("")
         setAwardPoint(0)
       })
-      .catch(function (error) {
-        console.log(error)
-      })
+      .catch(function (error) {})
   }
-
-
 
   useEffect(() => {
     axios
-    .get(
-      `${
-        import.meta.env.VITE_APP_BACKEND_URL
-      }/admin/list/verticals?limit=10&page=1`,
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("access_token"),
-        },
-      }
-    )
-    .then(function (response) {
-      console.log(response.data.data)
-      setVerticals(response.data.data)
-    })
-    .catch(function (error) {
-      console.log(error.response.status)
-    })
-    
+      .get(
+        `${
+          import.meta.env.VITE_APP_BACKEND_URL
+        }/admin/list/verticals?limit=100&page=1`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+        }
+      )
+      .then(function (response) {
+        setVerticals(response.data.data)
+      })
+      .catch(function (error) {})
+
     axios
       .get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/discord`, {
         headers: {
@@ -211,12 +197,9 @@ const AwardPoints = () => {
         },
       })
       .then(function (response) {
-        console.log(response.data.data)
         setDiscordStatus(response.data.data)
       })
-      .catch(function (error) {
-        console.log(error.response.status)
-      })
+      .catch(function (error) {})
 
     getUsers(1)
     fetchTags(1)
@@ -263,14 +246,12 @@ const AwardPoints = () => {
         }
       )
       .then((response) => {
-        console.log(response.data)
         if (response.data.status) {
           setTagCreated(200)
         }
       })
       .catch((error) => {
-        console.log(error.response)
-        setTagCreated(404)
+        setTagCreated(error.response.status)
       })
   }
 
@@ -340,7 +321,6 @@ const AwardPoints = () => {
                 <select
                   value={newTagVertical}
                   onChange={(e) => {
-                    console.log(e.target.value)
                     setNewTagVertical(e.target.value)
                   }}
                   className={styles.input_field}
@@ -372,7 +352,7 @@ const AwardPoints = () => {
                 ) : tagcreated === 400 ? (
                   <Alert status="error" variant="left-accent">
                     <AlertIcon />
-                    Tag creation failed!
+                    Failed! Make sure the tag code is unique.
                   </Alert>
                 ) : null}
               </div>
@@ -419,7 +399,6 @@ const AwardPoints = () => {
                         )}
                         onChange={(event) => {
                           handleCheckboxChange(event, parseInt(user.user_id))
-                          console.log(checkedUserIds)
                         }}
                         value={user.user_id}
                       />

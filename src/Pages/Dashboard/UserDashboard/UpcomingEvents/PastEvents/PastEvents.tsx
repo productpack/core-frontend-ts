@@ -51,7 +51,7 @@ const PastEvents = () => {
         },
       })
       .then(function (response) {
-        console.log(response.data.data)
+
 
         if (!response.data.data.onboard_status) {
           onOpen()
@@ -63,17 +63,17 @@ const PastEvents = () => {
         )
       })
       .catch(function (error) {
-        console.log(error)
+
       })
 
     axios
       .get(`${import.meta.env.VITE_APP_BACKEND_URL}/events/past`)
       .then(function (response) {
-        console.log(response.data.data)
+
         setPastEvents(response.data.data)
       })
       .catch(function (error) {
-        console.log(error)
+
       })
   }, [])
   return (

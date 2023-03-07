@@ -45,7 +45,6 @@ const Login = () => {
         return navigate("/user/dashboard")
       })
       .catch(function (error) {
-        console.log(error.response)
         setStatus(error.response.status)
         setStatusMessage("Either Invalid User or Wrong Password")
       })
@@ -61,7 +60,6 @@ const Login = () => {
         setStatusMessage("Reset Key Successfully Sent!")
       })
       .catch(function (error) {
-        console.log(error)
         setStatus(error.response.status)
         setStatusMessage("You have Entered an Invalid Email Address")
       })
