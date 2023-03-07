@@ -47,7 +47,7 @@ const SideBar = ({ onOpen }: { onOpen: any }) => {
 
               {localStorage.getItem("onboard_status") === "true" ? (
                 <a
-                  href="https://www.productpack.in/"
+                  href="https://discord.gg/779QTww7"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
