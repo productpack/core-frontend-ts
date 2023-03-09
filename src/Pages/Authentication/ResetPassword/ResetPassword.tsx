@@ -46,6 +46,9 @@ const ResetPassword = () => {
         setStatus(response.status)
         console.log(response)
         setStatusMessage("Password Resetted, You will be redirected to Login.")
+        setTimeout(() => {
+          window.location.href = "/login"
+        }, 5000)
       })
       .catch(function (error) {
         setStatus(error.response.status)
@@ -133,9 +136,6 @@ const ResetPassword = () => {
               onClick={() => {
                 if (isvalid) {
                   resetPass()
-                  setTimeout(() => {
-                    window.location.href = "/login"
-                  }, 5000)
                 } else {
                   setStatus(400)
                   setStatusMessage(

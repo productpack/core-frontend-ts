@@ -34,8 +34,6 @@ const UpcomingEvents = () => {
         },
       })
       .then(function (response) {
-
-
         if (!response.data.data.onboard_status) {
           onOpen()
         }
@@ -45,19 +43,14 @@ const UpcomingEvents = () => {
           response.data.data.onboard_status
         )
       })
-      .catch(function (error) {
-
-      })
+      .catch(function (error) {})
 
     axios
       .get(`${import.meta.env.VITE_APP_BACKEND_URL}/events/upcoming`)
       .then(function (response) {
-
         setUpcomingEvents(response.data.data)
       })
-      .catch(function (error) {
-
-      })
+      .catch(function (error) {})
   }, [])
 
   const [upcomingEvents, setUpcomingEvents] = useState([
@@ -129,37 +122,46 @@ const UpcomingEvents = () => {
           </p>
           <div className={styles.upcoming_events}>
             {upcomingEvents &&
-              upcomingEvents.map((event) => (
-                <div className={styles.event_container}>
-                  <div className={styles.event_card}>
-                    <div>
-                      <h2 className={styles.event_name}>{event.title}</h2>
-                      <p className={styles.event_description}>
-                        {event.description.slice(0, 100)} . . .
-                      </p>
-                      <p className={styles.event_label}>
-                        Starting time:{" "}
-                        {event.start_time &&
-                          new Intl.DateTimeFormat("en-IN", {
-                            timeZone: "Asia/Kolkata",
-                            hour: "numeric",
-                            minute: "numeric",
-                            hour12: true,
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit",
-                          }).format(new Date(event.start_time))}
-                      </p>
-                      <p className={styles.event_label}>
-                        Event Vertical: {event.vertical}
-                      </p>
+              upcomingEvents
+                .filter(
+                  (event) => new Date(event.start_time).getTime() > Date.now()
+                )
+                .sort(
+                  (a: { start_time: any }, b: { start_time: any }) =>
+                    new Date(b.start_time).valueOf() -
+                    new Date(a.start_time).valueOf()
+                )
+                .map((event) => (
+                  <div className={styles.event_container}>
+                    <div className={styles.event_card}>
+                      <div>
+                        <h2 className={styles.event_name}>{event.title}</h2>
+                        <p className={styles.event_description}>
+                          {event.description.slice(0, 100)} . . .
+                        </p>
+                        <p className={styles.event_label}>
+                          Starting time:{" "}
+                          {event.start_time &&
+                            new Intl.DateTimeFormat("en-IN", {
+                              timeZone: "Asia/Kolkata",
+                              hour: "numeric",
+                              minute: "numeric",
+                              hour12: true,
+                              year: "numeric",
+                              month: "2-digit",
+                              day: "2-digit",
+                            }).format(new Date(event.start_time))}
+                        </p>
+                        <p className={styles.event_label}>
+                          Event Vertical: {event.vertical}
+                        </p>
+                      </div>
+                      <button className={styles.registration_button}>
+                        Register
+                      </button>
                     </div>
-                    <button className={styles.registration_button}>
-                      Register
-                    </button>
                   </div>
-                </div>
-              ))}
+                ))}
           </div>
         </div>
       </div>

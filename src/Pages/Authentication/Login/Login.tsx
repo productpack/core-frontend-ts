@@ -20,7 +20,6 @@ import {
 } from "@chakra-ui/react"
 
 const Login = () => {
-
   //State Variables for Login Form
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -78,6 +77,7 @@ const Login = () => {
           onClose()
           setStatus(1)
         }}
+        isCentered
       >
         <ModalOverlay />
         <ModalContent margin="1rem">

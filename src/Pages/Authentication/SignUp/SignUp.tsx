@@ -4,16 +4,22 @@ import styles from "./SignUp.module.css"
 import { useState } from "react"
 
 import { Alert, AlertIcon, AlertDescription } from "@chakra-ui/react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const SignUp = () => {
   //State Variables for SignUp Form
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")
 
-  //Alert State Variables
+  const navigate = useNavigate()
+
+  //Alert State Variables(Signup)
   const [status, setStatus] = useState(1)
   const [statusMessage, setStatusMessage] = useState("")
+
+  //Alert State Variables(Signup)
+  const [statusResend, setStatusResend] = useState(1)
+  const [statusMessageResend, setStatusMessageResend] = useState("")
 
   //SignUp POST Request (Init)
   //TODO: Resent Email Verification Link.
@@ -32,8 +38,28 @@ const SignUp = () => {
       .catch(function (error) {
         setStatus(error.response.status)
         setStatusMessage(
-          "User Already Registered. Kindly, Checkout your Email."
+          "User Already Registered. Kindly, Check your Email or Reinitate the Signup Process."
         )
+      })
+  }
+
+  const initResend = () => {
+    axios
+      .post(`${import.meta.env.VITE_APP_BACKEND_URL}/init_resend`, {
+        email: email,
+      })
+      .then(function (response) {
+        console.log(response)
+        setStatus(response.status)
+        setStatusMessage("SignUp Procedure Restarted! Check Email.")
+      })
+      .catch(function (error) {
+        console.log(error)
+        setStatus(error.response.status)
+        setStatusMessage(
+          "User Already Verified. You will be redirected to Login Page."
+        )
+        setTimeout(() => navigate("/login"), 3000)
       })
   }
 
@@ -83,17 +109,31 @@ const SignUp = () => {
               )}
             </div>
 
-            <Button
-              onClick={() => {
-                if (email && name) {
-                  init()
-                }
-              }}
-              colorScheme="linkedin"
-              size="md"
-            >
-              SignUp
-            </Button>
+            {status !== 400 ? (
+              <Button
+                onClick={() => {
+                  if (email && name) {
+                    init()
+                  }
+                }}
+                colorScheme="linkedin"
+                size="md"
+              >
+                SignUp
+              </Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  if (email) {
+                    initResend()
+                  }
+                }}
+                colorScheme="linkedin"
+                size="md"
+              >
+                Resent Verification Token
+              </Button>
+            )}
             <div className={styles.secondary_options}>
               <Link to="/login">
                 <p className={styles.so_text}>Already have an Account?</p>

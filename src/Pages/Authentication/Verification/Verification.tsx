@@ -49,10 +49,11 @@ const Verification = () => {
       .catch(function (error) {
         setStatus(error.response.status)
         if (isvalid) {
-          setStatusMessage("User Already Verified, Please Login!")
-          setTimeout(() => {
-            return navigate("/login")
-          }, 3000)
+          setStatusMessage(error.response.data.message)
+          console.log(error)
+          // setTimeout(() => {
+          //   return navigate("/login")
+          // }, 3000)
         } else {
           setStatusMessage("Password Doesn't Meet Security Requirements!")
         }
