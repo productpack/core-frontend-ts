@@ -217,7 +217,9 @@ const UserDashboard = () => {
             </p>
             <div className={styles.upcoming_events}>
               {upcomingEvents
-                .filter((event) => new Date(event.start_time).getTime() > Date.now())
+                .filter(
+                  (event) => new Date(event.start_time).getTime() > Date.now()
+                )
                 .sort(
                   (a: { start_time: any }, b: { start_time: any }) =>
                     new Date(b.start_time).valueOf() -
@@ -231,6 +233,7 @@ const UserDashboard = () => {
                         <p className={styles.event_description}>
                           {event.description.slice(0, 100)} . . .
                         </p>
+
                         <p className={styles.event_label}>
                           Starting time:{" "}
                           {event.start_time &&
@@ -244,9 +247,26 @@ const UserDashboard = () => {
                               day: "2-digit",
                             }).format(new Date(event.start_time))}
                         </p>
-                        <p className={styles.event_label}>
-                          Event Vertical: {event.vertical}
-                        </p>
+                        <Badge
+                          marginTop={"0.5rem"}
+                          marginRight={"0.25rem"}
+                          colorScheme="linkedin"
+                        >
+                          {event.vertical}
+                        </Badge>
+
+                        <Badge
+                          marginTop={"0.5rem"}
+                          marginRight={"0.25rem"}
+                          colorScheme="green"
+                        >
+                          {Math.ceil(
+                            (new Date(event.start_time).getTime() -
+                              new Date().getTime()) /
+                              (1000 * 3600 * 24)
+                          )}{" "}
+                          days left
+                        </Badge>
                       </div>
                       <a
                         href={event.location}
