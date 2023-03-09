@@ -1,3 +1,11 @@
+import { useEffect, useState } from "react"
+
+import styles from "./CreateEvent.module.css"
+import axios from "axios"
+
+import SideBar from "../../../../Components/SideBar/SideBar"
+import Navbar from "../../../../Components/Navbar/Navbar"
+
 import {
   Alert,
   AlertIcon,
@@ -6,12 +14,6 @@ import {
   useDisclosure,
   Wrap,
   WrapItem,
-} from "@chakra-ui/react"
-import { useEffect, useState } from "react"
-import SideBar from "../../../../Components/SideBar/SideBar"
-import styles from "./CreateEvent.module.css"
-
-import {
   Modal,
   ModalOverlay,
   ModalContent,
@@ -20,18 +22,19 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react"
-import axios from "axios"
-import Navbar from "../../../../Components/Navbar/Navbar"
 
 const CreateEvent = () => {
+  //For Modal Open and Close (Discord Linking)
   const { isOpen, onOpen, onClose } = useDisclosure()
 
+  //For Modal Open and Close (Vertical Creation)
   const {
     isOpen: isOpenVerticalModal,
     onOpen: onOpenVerticalModal,
     onClose: onCloseVerticalModal,
   } = useDisclosure()
 
+  //For Modal Open and Close (Tag Creation)
   const {
     isOpen: isOpenTagModal,
     onOpen: onOpenTagModal,
@@ -46,7 +49,7 @@ const CreateEvent = () => {
     },
   ])
 
-  //For Creating Events
+  //State Variables for Event Creation Form
   const [slug, setSlug] = useState("")
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -71,12 +74,15 @@ const CreateEvent = () => {
     onboard_status: false,
   })
 
+  //For Checking whether the event,vertical,tag has been created.
   const [eventcreated, setEventCreated] = useState(0)
   const [verticalcreated, setVerticalCreated] = useState(0)
   const [tagcreated, setTagCreated] = useState(0)
 
+  //For Checking whether the discord key has been copied.
   const [copyStatus, setCopyStatus] = useState(false)
 
+  //Resetting the form after event creation
   useEffect(() => {
     if (eventcreated) {
       setSlug("")
@@ -91,6 +97,7 @@ const CreateEvent = () => {
     }
   }, [eventcreated])
 
+  //useEffect hook for getting the existing verticals and discord status on page load(API Call)
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/discord`, {
@@ -107,7 +114,7 @@ const CreateEvent = () => {
       .get(
         `${
           import.meta.env.VITE_APP_BACKEND_URL
-        }/admin/list/verticals?limit=10&page=1`,
+        }/admin/list/verticals?limit=100&page=1`,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("access_token"),
@@ -120,6 +127,7 @@ const CreateEvent = () => {
       .catch(function (error) {})
   }, [])
 
+  //POST request for creating a new event
   const createEvent = () => {
     const headers = {
       Authorization: "Bearer " + localStorage.getItem("access_token"),
@@ -151,6 +159,7 @@ const CreateEvent = () => {
       })
   }
 
+  //POST request for creating a new vertical
   const createVertical = () => {
     const headers = {
       Authorization: "Bearer " + localStorage.getItem("access_token"),
@@ -176,6 +185,7 @@ const CreateEvent = () => {
       })
   }
 
+  //POST request for creating a new tag
   const createTag = () => {
     const headers = {
       Authorization: "Bearer " + localStorage.getItem("access_token"),
@@ -218,8 +228,8 @@ const CreateEvent = () => {
             <ModalHeader>Create Vertical</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              To create a vertical, enter a title and unique code. Click
-              "Create". Note: title and code can't be changed once created.
+              To create a vertical, enter a title and code, and click "Create".
+              The title and code cannot be changed later.
               <div className={styles.form_field}>
                 <p className={styles.fv_input_field_label}>Vertical Code</p>
                 <input
@@ -283,8 +293,9 @@ const CreateEvent = () => {
             <ModalHeader>Create Tag</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              To create a vertical, enter a title and unique code. Click
-              "Create". Note: title and code can't be changed once created.
+              To create a tag, enter a title and select vertical and enter tag
+              description. Click "Create". Note: details can't be changed
+              once created.
               <div className={styles.form_field}>
                 <p className={styles.fv_input_field_label}>Tag Code</p>
                 <input
@@ -309,8 +320,11 @@ const CreateEvent = () => {
                   className={styles.input_field}
                 >
                   <option>Select Vertical</option>
+
                   {verticals.map((vertical) => (
-                    <option value={vertical.code}>{vertical.title}</option>
+                    <option key={vertical.code} value={vertical.code}>
+                      {vertical.title}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -534,7 +548,9 @@ const CreateEvent = () => {
                 >
                   <option>Select Vertical</option>
                   {verticals.map((vertical) => (
-                    <option value={vertical.code}>{vertical.title}</option>
+                    <option key={vertical.code} value={vertical.code}>
+                      {vertical.title}
+                    </option>
                   ))}
                 </select>
               </div>

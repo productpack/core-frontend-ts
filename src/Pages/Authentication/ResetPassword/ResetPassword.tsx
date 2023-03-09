@@ -3,27 +3,38 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer"
 import styles from "./ResetPassword.module.css"
 
 import { useEffect, useState } from "react"
-import { Button } from "@chakra-ui/react"
+import { Button, Tooltip } from "@chakra-ui/react"
 import axios from "axios"
 import { useSearchParams } from "react-router-dom"
 
 import { Alert, AlertIcon, AlertDescription } from "@chakra-ui/react"
 
 const ResetPassword = () => {
+  //State Variables for Reset Password Form
   const [email, setEmail] = useState("")
   const [secret, setSecret] = useState("")
   const [password, setPassword] = useState("")
   const [passwordAgain, setPasswordAgain] = useState("")
+
+  //For Password Strength Check(Validation)
+  const [isvalid, setIsValid] = useState(false)
+
+  //Get URL Params(Email and Secret)
   const [searchParams] = useSearchParams()
 
+  //Alert State Variables
   const [status, setStatus] = useState(1)
-  const [statusMessage, setStatusMessage] = useState("")
+  const [statusMessage, setStatusMessage] = useState(
+    "Make Sure you have filled in the fields."
+  )
 
+  //Get Email and Secret from URL Params(Decoding)
   useEffect(() => {
     setEmail(atob(searchParams.get("email") as string))
     setSecret(searchParams.get("secret") as string)
   }, [])
 
+  //POST Request for Reset Password
   const resetPass = () => {
     axios
       .post(`${import.meta.env.VITE_APP_BACKEND_URL}/reset_pass`, {
@@ -33,7 +44,8 @@ const ResetPassword = () => {
       })
       .then(function (response) {
         setStatus(response.status)
-        setStatusMessage("Password Reset Is Successful!")
+        console.log(response)
+        setStatusMessage("Password Resetted, You will be redirected to Login.")
       })
       .catch(function (error) {
         setStatus(error.response.status)
@@ -55,17 +67,25 @@ const ResetPassword = () => {
         </div>
         <div className={styles.form_container}>
           <div className={styles.fv_texts}>
-            <p className={styles.fv_heading}>Reset Your Account Password</p>
+            <p className={styles.fv_heading}>
+              Reset Your Product Pack Password
+            </p>
             <p className={styles.fv_tagline}>
-              Enter in the secret key your received from the email we just sent
-              you.
+              Enter the new password for your account, and you can login to your
+              account. Make sure you don't forget it again.
             </p>
           </div>
           <div className={styles.fv_input_form}>
             <p className={styles.fv_input_field_label}>Password</p>
             <input
               type="password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value)
+                if (status === 400) {
+                  setStatus(1)
+                  setStatusMessage("")
+                }
+              }}
               className={styles.input_field}
             />
             <p className={styles.fv_input_field_label}>Confirm Password</p>
@@ -89,6 +109,9 @@ const ResetPassword = () => {
                 minLength={8}
                 value={password}
                 valueAgain={passwordAgain}
+                onChange={(isValid) => {
+                  setIsValid(isValid)
+                }}
               />
             </div>
             {secret && status && (status === 200 || status === 400) && (
@@ -96,7 +119,6 @@ const ResetPassword = () => {
                 marginTop="1rem"
                 marginBottom="1rem"
                 variant="left-accent"
-                width="80%"
                 status={status === 400 ? "error" : "success"}
               >
                 <AlertIcon />
@@ -106,15 +128,28 @@ const ResetPassword = () => {
               </Alert>
             )}
           </div>
-          <Button
-            onClick={() => {
-              resetPass()
-            }}
-            colorScheme="linkedin"
-            size="md"
-          >
-            Set Password
-          </Button>
+          <Tooltip label={statusMessage}>
+            <Button
+              onClick={() => {
+                if (isvalid) {
+                  resetPass()
+                  setTimeout(() => {
+                    window.location.href = "/login"
+                  }, 5000)
+                } else {
+                  setStatus(400)
+                  setStatusMessage(
+                    "Password Doesn't Meet Security Requirements!"
+                  )
+                }
+              }}
+              disabled={!isvalid}
+              colorScheme="linkedin"
+              size="md"
+            >
+              Set Password
+            </Button>
+          </Tooltip>
         </div>
       </div>
     </div>

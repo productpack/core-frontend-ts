@@ -7,12 +7,16 @@ import { Alert, AlertIcon, AlertDescription } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 
 const SignUp = () => {
+  //State Variables for SignUp Form
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")
 
+  //Alert State Variables
   const [status, setStatus] = useState(1)
   const [statusMessage, setStatusMessage] = useState("")
 
+  //SignUp POST Request (Init)
+  //TODO: Resent Email Verification Link.
   const init = () => {
     setStatus(1)
     setStatusMessage("")

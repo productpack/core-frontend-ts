@@ -1,15 +1,3 @@
-import {
-  Button,
-  ButtonGroup,
-  Link,
-  Text,
-  useDisclosure,
-  Radio,
-  RadioGroup,
-  Stack,
-  Alert,
-  AlertIcon,
-} from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import SideBar from "../../../../Components/SideBar/SideBar"
 import styles from "./AwardPoints.module.css"
@@ -23,9 +11,6 @@ import {
   Th,
   Td,
   TableContainer,
-} from "@chakra-ui/react"
-
-import {
   Modal,
   ModalOverlay,
   ModalContent,
@@ -33,12 +18,30 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Button,
+  ButtonGroup,
+  Link,
+  Text,
+  useDisclosure,
+  Radio,
+  RadioGroup,
+  Stack,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react"
+
 import axios from "axios"
 import Navbar from "../../../../Components/Navbar/Navbar"
 
 const AwardPoints = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    isOpen: isOpenNewTagModal,
+    onOpen: onOpenNewTagModal,
+    onClose: onCloseNewTagModal,
+  } = useDisclosure()
+
+
   const [copyStatus, setCopyStatus] = useState(false)
   const [awardPoint, setAwardPoint] = useState(0)
 
@@ -83,6 +86,7 @@ const AwardPoints = () => {
 
   const [currentPageTag, setCurrentPageTag] = useState(1)
 
+  //Function to fetch the tags from the backend
   const fetchTags = async (page: number) => {
     try {
       const response = await axios.get(
@@ -99,18 +103,22 @@ const AwardPoints = () => {
     } catch (error) {}
   }
 
+  //Function to fetch the tags from the backend(On Page Load/On Page Change)
   useEffect(() => {
     fetchTags(currentPageTag)
   }, [currentPageTag])
 
+  //Function to handle the previous page button(For Tags)
   const handlePreviousPageTag = () => {
     setCurrentPageTag((prevPage) => prevPage - 1)
   }
 
+  //Function to handle the next page button(For Tags)
   const handleNextPageTag = () => {
     setCurrentPageTag((prevPage) => prevPage + 1)
   }
 
+  //Function to handle the tag click(Checkbox)
   const handleTagClick = (tagCode: string) => {
     setSelectedTag(tagCode)
   }
@@ -124,36 +132,8 @@ const AwardPoints = () => {
 
   const [users, setUsers] = useState<User[]>([])
 
-  const {
-    isOpen: isOpenNewTagModal,
-    onOpen: onOpenNewTagModal,
-    onClose: onCloseNewTagModal,
-  } = useDisclosure()
 
-  const [newTag, setNewTag] = useState({
-    code: "",
-    verticial: "",
-    desc: "",
-  })
-
-  const getUsers = (page: number) => {
-    axios
-      .get(
-        `${
-          import.meta.env.VITE_APP_BACKEND_URL
-        }/admin/list/users?limit=10&page=${page}`,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("access_token"),
-          },
-        }
-      )
-      .then(function (response) {
-        setUsers(response.data.data)
-      })
-      .catch(function (error) {})
-  }
-
+  //POST Request to award points to the selected users
   const awardPoints = () => {
     const body = {
       awardee_list: checkedUserIds,
@@ -175,7 +155,7 @@ const AwardPoints = () => {
         setAwardStatus(response.data.data)
 
         if (response.data.data.success_list.length > 0) {
-          console.clear();
+          console.clear()
           console.log("Success List")
           console.log("----------------")
           console.log("Tag Name:" + selectedTag)
@@ -184,19 +164,19 @@ const AwardPoints = () => {
           users.filter((user) => {
             response.data.data.success_list.map((successUser: String) => {
               if (user.user_id === successUser) {
-                console.log("Username:" +user.name)
+                console.log("Username:" + user.name)
               }
             })
           })
         }
         if (response.data.data.fail_list.length > 0) {
-          console.clear();
+          console.clear()
           console.log("Fail List")
           console.log("----------------")
           users.filter((user) => {
             response.data.data.fail_list.map((failUser: String) => {
               if (user.user_id === failUser) {
-                console.log("Username:" +user.name)
+                console.log("Username:" + user.name)
               }
             })
           })
@@ -205,6 +185,7 @@ const AwardPoints = () => {
       .catch(function (error) {})
   }
 
+  //GET Request to get the existing verticals, and trigger function for users lists and tags fetching
   useEffect(() => {
     axios
       .get(
@@ -237,6 +218,26 @@ const AwardPoints = () => {
     fetchTags(1)
   }, [])
 
+  //GET Request to get the users list according to page number
+  const getUsers = (page: number) => {
+    axios
+      .get(
+        `${
+          import.meta.env.VITE_APP_BACKEND_URL
+        }/admin/list/users?limit=10&page=${page}`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+        }
+      )
+      .then(function (response) {
+        setUsers(response.data.data)
+      })
+      .catch(function (error) {})
+  }
+
+  //Function to handel checkbox change for users list
   const handleCheckboxChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     userId: number
@@ -249,18 +250,22 @@ const AwardPoints = () => {
     }
   }
 
+  //useEffect hook to get the users list on page change
   useEffect(() => {
     getUsers(currentPage)
   }, [currentPage])
 
+  //Function to handle the previous page button(For Users)
   const handlePreviousPage = () => {
     setCurrentPage((prevPage) => prevPage - 1)
   }
 
+  //Function to handle the next page button(For Users)
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1)
   }
 
+  //POST Request to create a new tag
   const createTag = () => {
     const headers = {
       Authorization: "Bearer " + localStorage.getItem("access_token"),

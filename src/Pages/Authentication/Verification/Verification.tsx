@@ -9,6 +9,7 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 import { Alert, AlertIcon, AlertDescription } from "@chakra-ui/react"
 
 const Verification = () => {
+  //State Variables for Verification Form
   const [email, setEmail] = useState("")
   const [secret, setSecret] = useState("")
   const [password, setPassword] = useState("")
@@ -18,14 +19,17 @@ const Verification = () => {
 
   let navigate = useNavigate()
 
+  //Alert State Variables
   const [status, setStatus] = useState(1)
   const [statusMessage, setStatusMessage] = useState("")
 
+  //Get Email and Secret from URL Params(Decoding)
   useEffect(() => {
     setEmail(atob(searchParams.get("email") as string))
     setSecret(searchParams.get("secret") as string)
   }, [])
 
+  //POST Request for Verification
   const set_pass = () => {
     axios
       .post(`${import.meta.env.VITE_APP_BACKEND_URL}/set_pass`, {
@@ -38,13 +42,17 @@ const Verification = () => {
         localStorage.setItem("is_admin", "false")
         setStatus(response.status)
         setStatusMessage("SignUp Is Successfully Completed.")
-        return navigate("/user/dashboard")
+        setTimeout(() => {
+          return navigate("/user/dashboard")
+        }, 3000)
       })
       .catch(function (error) {
         setStatus(error.response.status)
         if (isvalid) {
           setStatusMessage("User Already Verified, Please Login!")
-          return navigate("/login")
+          setTimeout(() => {
+            return navigate("/login")
+          }, 3000)
         } else {
           setStatusMessage("Password Doesn't Meet Security Requirements!")
         }
@@ -121,7 +129,12 @@ const Verification = () => {
 
           <Button
             onClick={() => {
-              set_pass()
+              if (isvalid) {
+                set_pass()
+              } else {
+                setStatus(400)
+                setStatusMessage("Password Doesn't Meet Security Requirements!")
+              }
             }}
             colorScheme="linkedin"
             size="md"

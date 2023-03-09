@@ -20,6 +20,8 @@ import {
 } from "@chakra-ui/react"
 
 const Login = () => {
+
+  //State Variables for Login Form
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
@@ -27,8 +29,10 @@ const Login = () => {
   const [statusMessage, setStatusMessage] = useState("")
   let navigate = useNavigate()
 
+  //For Modal Open and Close (Password Reset)
   const { isOpen, onOpen, onClose } = useDisclosure()
 
+  //Login POST Request
   const login = () => {
     localStorage.clear()
     axios
@@ -50,6 +54,7 @@ const Login = () => {
       })
   }
 
+  //Password Reset Key Initalization
   const initResend = () => {
     axios
       .post(`${import.meta.env.VITE_APP_BACKEND_URL}/init_reset_pass`, {
