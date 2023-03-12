@@ -20,6 +20,18 @@
   max-width: 35rem;
 }
 
+.password_input_wrapper {
+  position: relative;
+}
+
+.password_visibility_toggle {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
 .name {
   font-family: "Montserrat", sans-serif;
   margin-left: 1rem;

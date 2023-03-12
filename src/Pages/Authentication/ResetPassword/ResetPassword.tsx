@@ -8,13 +8,18 @@ import axios from "axios"
 import { useSearchParams } from "react-router-dom"
 
 import { Alert, AlertIcon, AlertDescription } from "@chakra-ui/react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 
 const ResetPassword = () => {
   //State Variables for Reset Password Form
   const [email, setEmail] = useState("")
   const [secret, setSecret] = useState("")
   const [password, setPassword] = useState("")
+  const [passwordVisible, setPasswordVisible] = useState(false)
+
   const [passwordAgain, setPasswordAgain] = useState("")
+  const [passwordAgainVisible, setPasswordAgainVisible] = useState(false)
 
   //For Password Strength Check(Validation)
   const [isvalid, setIsValid] = useState(false)
@@ -80,23 +85,40 @@ const ResetPassword = () => {
           </div>
           <div className={styles.fv_input_form}>
             <p className={styles.fv_input_field_label}>Password</p>
-            <input
-              type="password"
-              onChange={(e) => {
-                setPassword(e.target.value)
-                if (status === 400) {
-                  setStatus(1)
-                  setStatusMessage("")
-                }
-              }}
-              className={styles.input_field}
-            />
+
+            <div className={styles.password_input_wrapper}>
+              <input
+                type={passwordVisible ? "text" : "password"}
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                  if (status === 400) {
+                    setStatus(1)
+                    setStatusMessage("")
+                  }
+                }}
+                className={styles.input_field}
+              />
+              <FontAwesomeIcon
+                icon={passwordVisible ? faEyeSlash : faEye}
+                onClick={() => setPasswordVisible(!passwordVisible)}
+                className={styles.password_visibility_toggle}
+              />
+            </div>
+
             <p className={styles.fv_input_field_label}>Confirm Password</p>
-            <input
-              type="password"
-              onChange={(e) => setPasswordAgain(e.target.value)}
-              className={styles.input_field}
-            />
+
+            <div className={styles.password_input_wrapper}>
+              <input
+                type={passwordAgainVisible ? "text" : "password"}
+                onChange={(e) => setPasswordAgain(e.target.value)}
+                className={styles.input_field}
+              />
+              <FontAwesomeIcon
+                icon={passwordAgainVisible ? faEyeSlash : faEye}
+                onClick={() => setPasswordAgainVisible(!passwordAgainVisible)}
+                className={styles.password_visibility_toggle}
+              />
+            </div>
 
             <div className={styles.password_checklist}>
               <ReactPasswordChecklist

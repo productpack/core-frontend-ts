@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 
 import { Alert, AlertIcon, AlertDescription } from "@chakra-ui/react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 
 import {
   Modal,
@@ -23,6 +25,7 @@ const Login = () => {
   //State Variables for Login Form
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [passwordVisible, setPasswordVisible] = useState(false)
 
   const [status, setStatus] = useState(1)
   const [statusMessage, setStatusMessage] = useState("")
@@ -147,13 +150,18 @@ const Login = () => {
                 className={styles.input_field}
               />
               <p className={styles.fv_input_field_label}>Password</p>
-              <input
-                onChange={(e) => {
-                  setPassword(e.target.value)
-                }}
-                type="password"
-                className={styles.input_field}
-              />
+              <div className={styles.password_input_wrapper}>
+                <input
+                  onChange={(e) => setPassword(e.target.value)}
+                  type={passwordVisible ? "text" : "password"}
+                  className={styles.input_field}
+                />
+                <FontAwesomeIcon
+                  icon={passwordVisible ? faEyeSlash : faEye}
+                  onClick={() => setPasswordVisible(!passwordVisible)}
+                  className={styles.password_visibility_toggle}
+                />
+              </div>
               {!isOpen && status && (status === 200 || status === 400) && (
                 <Alert
                   marginTop="1rem"
